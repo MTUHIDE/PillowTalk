@@ -1,28 +1,30 @@
 import RPi.GPIO as GPIO
 import time
 
-motorgpio = 11
-sleepTime = 10
-
 GPIO.setmode(GPIO.BOARD)
 
-try:
-	time.sleep(5)
-	
-	GPIO.setup(motorgpio, GPIO.OUT)
-	GPIO.output(motorgpio, GPIO.HIGH)
-	
-	for x in range(sleepTime):
-		time.sleep(1)
-		print (x)
+class MotorControl:
+	def __init__(self):
+		self.motorControl = 11
 
-	GPIO.output(motorgpio, GPIO.LOW)
+	def mControl(self, command, time):
+		try:
+			time.sleep(time)
 
-except KeyboardInterrupt:
-	print ("\nwhy did you stop it\n")
+			GPIO.setup(motorgpio, GPIO.OUT)
+			GPIO.output(motorgpio, GPIO.HIGH)
 
-except:
-	print ("\nwhy did something else stop it\n")
+			for x in range(sleepTime):
+				time.sleep(1)
+				print (x)
 
-finally:
-	GPIO.cleanup()
+			GPIO.output(motorgpio, GPIO.LOW)
+
+		except KeyboardInterrupt:
+			print ("\nwhy did you stop it\n")
+
+		except:
+			print ("\nwhy did something else stop it\n")
+
+		finally:
+			GPIO.cleanup()
