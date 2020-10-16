@@ -11,12 +11,20 @@ app = Flask(__name__)
 def index():
    return render_template('/index.html')
 
-
+### Lists of commands ###
+# inflate x : inflates an 'x' amount of seconds
+# deflate x : deflates an 'x' amount of seconds
 @app.route('/command', methods=['POST'])
 def command():
 	if request.method == 'POST':
 		command = request.form['command']
-		print command
+		# print command
+                split = command.split()
+                if split[0] == "inflate":
+                    print "inflating " + split[1]
+                elif split[0] == "deflate":
+                    print "deflating " + split[1]
+
 		return render_template('/index.html')
 
 
