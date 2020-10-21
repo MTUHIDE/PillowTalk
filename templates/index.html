@@ -4,11 +4,14 @@
 		<script>
 			function inflate()
 			{
-				document.getElementById("command").innerHTML = "inflate 1";
+				document.getElementById("command").value = "inflate 1";
 				document.getElementById("command_form").submit();
-				document.write("hello");
 			}
-
+			function deflate()
+			{
+				document.getElementById("command").value = "deflate 1";
+				document.getElementById("command_form").submit();
+			}
 		</script>
 	</head>
 	<body>
@@ -18,10 +21,10 @@
 		<br>
 		<br>
 
-		<form method="post" id="command_form" action="/command">
+		<form method="post" name="command_form" id="command_form" action="/command">
 			<h2>Manual command control</h2>
 			<input type="text" id="command" name="command" placeholder="Enter command"/>
-			<input type="submit" id="submit" value="submit" name="ok"/>
+			<input type="submit" id="submit_btn" value="submit" name="ok"/>
 		</form>
 	</body>
 </html>
