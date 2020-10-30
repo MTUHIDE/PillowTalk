@@ -9,14 +9,20 @@ class MotorControl:
 		GPIO.setup(self.in1, GPIO.OUT)
 		GPIO.setup(self.in2, GPIO.OUT)
 
-
-	def motorOn(self, time):
-		GPIO.output(self.in1, True)
-		#GPIO.output(self.in2, True)
-
+	def motorOn(self, time, motorNumber):
+		if motorNumber == 1:
+			GPIO.output(self.in1, True)
+		elif motorNumber == 2:
+			GPIO.output(self.in2, True)
 		for x in range(time):
 			sleep(1)
-			print ("sleep for {}".format(x))
+			print x
 
-		GPIO.output(self.in1, False)
-		#GPIO.output(self.in2, False)
+		if motorNumber == 1:
+			GPIO.output(self.in1, False)
+		elif motorNumber == 2:
+			GPIO.output(self.in2, False)
+		print "Motor Finished"
+
+	def exit(self):
+		GPIO.cleanup()
