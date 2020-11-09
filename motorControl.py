@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
+GPIO.setwarnings(False)
 
 class MotorControl:
 	def __init__(self):
