@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash
 from waitress import serve
 # follow error back to source
 import traceback
-
+import socket
 # implementation of motorControl Class
 from motorControl import *
 
@@ -104,6 +104,13 @@ def command():
 
 
 if __name__ == "__main__":
-	host = "192.168.1.27"
+	testIP = "8.8.8.8"
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s.connect((testIP,0))
+	ip = s.getsockname()[0]
+	hostTest = socket.gethostname()
+	print "IP: " + ip + " HOST: " + hostTest
+
+	host = ip
 	port = "4433"
 	serve(app, host=host, port=port)
