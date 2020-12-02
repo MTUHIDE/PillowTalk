@@ -1,12 +1,13 @@
 # requires python2.7
 # importing flask module
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 from waitress import serve
+import json
 # follow error back to source
 import traceback
 import socket
 # implementation of motorControl Class
-from motorControl import *
+from relayControl import *
 
 # initializing a variable of Flask
 app = Flask(__name__)
@@ -14,14 +15,35 @@ app = Flask(__name__)
 # one concurrent command flag
 is_running1 = False
 is_running2 = False
-motor = MotorControl()
+relay = RelayControl()
 # decorating index function with the app.route
 @app.route('/')
 def index():
-    return render_template('/index.html')
+    with open("settings.json", "r") as f:
+        context = json.load(f)
+        f.close()
+        return render_template('/index.html', context=context)
 
 def index_error(error):
-    return render_template('/index.html', error=error)
+    with open("settings.json", "r") as f:
+        context = json.load(f)
+        f.close()
+        return render_template('/index.html', context=context, error=error)
+
+@app.route('/settings', methods=['POST'])
+def update_settings():
+    if request.method == 'POST':
+        with open("settings.json", "r+") as f:
+            context = json.load(f)
+            context['cushion_1_nickname'] = request.form['cushion_1_nickname']
+            context['cushion_2_nickname'] = request.form['cushion_2_nickname']
+            context['cushion_1_time'] = request.form['cushion_1_time']
+            context['cushion_2_time'] = request.form['cushion_2_time']
+            f.truncate(0)
+            f.seek(0)
+            json.dump(context, f)
+            f.close()
+            return redirect(url_for('index'))
 
 ### Lists of commands ###
 # inflate name x : inflates an 'x' amount of seconds on motor name
@@ -32,7 +54,7 @@ def command():
                 max_seconds = 10
 		global is_running1
 		global is_running2
-		global motor
+		global relay
                 command_form = request.form['command']
 		# print command
                 split = command_form.split()
@@ -44,13 +66,13 @@ def command():
                     return index_error("Inproper syntax")
 
                 command = split[0]
-		motorName = split[1]
+		relayName = split[1]
                 waitTime = int(split[2])
 
-		if motorName == "cushion_1" and is_running1:
+		if relayName == "cushion_1" and is_running1:
 		    return index_error("Already running that command")
 		    print "already running cushion1"
-		elif motorName == "cushion_2" and is_running2:
+		elif relayName == "cushion_2" and is_running2:
                     return index_error("already running that command")
 		    print "already running cushion2"
 
@@ -59,20 +81,24 @@ def command():
 
                 try:
                     if command == "inflate":
-			if motorName == "cushion_1":
+			if relayName == "cushion_1":
 			    is_running1 = True
-			    motor.motorOn(waitTime, 1)
-			elif motorName == "cushion_2":
+			    relay.relayRun(waitTime, 1)
+			elif relayName == "cushion_2":
 			    is_running2 = True
-			    motor.motorOn(waitTime, 2)
+			    relay.relayRun(waitTime, 2)
 			else:
 			    return index_error("invalid command")
                         print "inflating " + motorName + " for " + str(waitTime) + " seconds"
 
                     elif command == "deflate":
-                        if motorName == "cushion_1":
+                        if relayName == "cushion_1":
+			    is_running1 = True
+			    relay.relayRun(waitTime, 3)
 			    print "deflating"
-			elif motorName == "cushion_2":
+			elif relayName == "cushion_2":
+			    is_running2 = True
+			    relay.relayRun(WaitTime, 4)
 			    print "deflating"
 			else:
 			    return index_error("invalid command")
@@ -85,16 +111,16 @@ def command():
 
                 except KeyboardInterrupt:
                     print "\nWhy did keyboard stop program\n"
-		    motor.exit()
+		    relay.exit()
 
                 except Exception:
                     print "\nWhy did something else stop program\n"
                     traceback.print_exc()
 
                 finally:
-		    if motorName == "cushion_1":
+		    if relayName == "cushion_1":
 		        is_running1 = False
-		    elif motorName == "cushion_2":
+		    elif relayName == "cushion_2":
 			is_running2 = False
 		    else:
 			return index_error("invalid command")
