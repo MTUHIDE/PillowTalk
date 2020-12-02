@@ -69,6 +69,7 @@ def command():
 		relayName = split[1]
                 waitTime = int(split[2])
 
+		# Check to see if the specified cushion is in use
 		if relayName == "cushion_1" and is_running1:
 		    return index_error("Already running that command")
 		    print "already running cushion1"
@@ -76,10 +77,12 @@ def command():
                     return index_error("already running that command")
 		    print "already running cushion2"
 
-		if waitTime > max_seconds:
+		# Check to see if the specified time requested for the relay is not out of bounds
+		if waitTime > max_seconds or waitTime < 0:
                     return index_error("Duration too long")
 
                 try:
+		    # Call run relay for the specified cushion and set that cushion to be running
                     if command == "inflate":
 			if relayName == "cushion_1":
 			    is_running1 = True
@@ -90,7 +93,7 @@ def command():
 			else:
 			    return index_error("invalid command")
                         print "inflating " + motorName + " for " + str(waitTime) + " seconds"
-
+		    # Call run relay for the specified cushion and set that cushion to be running 
                     elif command == "deflate":
                         if relayName == "cushion_1":
 			    is_running1 = True
@@ -106,18 +109,18 @@ def command():
                         print "deflating " + motorName + " for " + str(waitTime) + " seconds"
 
                     else:
-                        # flash("hiiii")
                         return index_error("Invalid command")
-
+		# Keyboard interrupt exception handler
                 except KeyboardInterrupt:
                     print "\nWhy did keyboard stop program\n"
 		    relay.exit()
-
+		# Other interrupt exception handler
                 except Exception:
                     print "\nWhy did something else stop program\n"
                     traceback.print_exc()
 
                 finally:
+		    # set the specified cushion to not be running
 		    if relayName == "cushion_1":
 		        is_running1 = False
 		    elif relayName == "cushion_2":
@@ -130,6 +133,7 @@ def command():
 
 
 if __name__ == "__main__":
+	# Find the local ip of the raspberry pi to run the flask server off of
 	testIP = "8.8.8.8"
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	s.connect((testIP,0))
