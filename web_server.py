@@ -92,7 +92,7 @@ def command():
 			    relay.relayRun(waitTime, 2)
 			else:
 			    return index_error("invalid command")
-                        print "inflating " + motorName + " for " + str(waitTime) + " seconds"
+                        print "inflating " + relayName + " for " + str(waitTime) + " seconds"
 		    # Call run relay for the specified cushion and set that cushion to be running 
                     elif command == "deflate":
                         if relayName == "cushion_1":
@@ -106,7 +106,7 @@ def command():
 			else:
 			    return index_error("invalid command")
 
-                        print "deflating " + motorName + " for " + str(waitTime) + " seconds"
+                        print "deflating " + relayName + " for " + str(waitTime) + " seconds"
 
                     else:
                         return index_error("Invalid command")
