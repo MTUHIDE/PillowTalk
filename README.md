@@ -4,6 +4,8 @@
 #	Isaac Long
 #	Ian Lawrie
 #	Javen Zamojcin
+# Jacob Allen
+# Patrick Janssen
 # Advisor:
 #	Keith Vertanen
 #
