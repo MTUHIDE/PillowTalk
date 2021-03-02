@@ -15,6 +15,9 @@ The software requires the hardware of a raspberry pi 3 or 4.
 If you do not know how to setup a raspberry pi please follow this tutorial:
 https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
 
+The port that must be used for HTTPS is 443.
+The internal and external port might need to be different.
+
 Make sure that the pi is updated and upgraded by using (This will take some time):
 sudo apt update
 sudo apt full-upgrade
