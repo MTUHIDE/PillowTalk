@@ -44,7 +44,7 @@ class RelayControl:
 		elif relay == 4:
 			GPIO.output(self.pin4, False)
 		print "Relay Finished"
-		
+
 	#cycle everything based on time given
 	def cycle(self, cushionTime, waitTime, loopNumber):
 		totalTime = (cushionTime * 2) + waitTime
@@ -62,7 +62,7 @@ class RelayControl:
 			GPIO.output(self.pin2, False)
 			GPIO.output(self.pin4, False)
 		print "Cycle Complete"
-	
+
 	#convert seconds given into hour,minute,sec
 	def convert(seconds):
 		seconds = seconds % (24 *3600)
@@ -71,7 +71,7 @@ class RelayControl:
 		minutes = seconds // 60
 		seconds %= 60
 		return  "%d:%02d:%02d" % (hour, minutes, seconds)
-	
+
 	# Reset the pins mode and clean up any changed settings on the pins
 	def exit(self):
 		GPIO.cleanup()

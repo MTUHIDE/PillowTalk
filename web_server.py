@@ -45,13 +45,18 @@ def update_settings():
             f.close()
             return redirect(url_for('index'))
 
+@app.route('/server_connection_test', methods=['GET'])
+def server_connection_test():
+	print("server connection tested\n")
+	return render_template('server_connection_test.html')
+
 ### Lists of commands ###
 # inflate name x : inflates an 'x' amount of seconds on motor name
 # deflate name x : deflates an 'x' amount of seconds on motor name
 @app.route('/command', methods=['POST'])
 def command():
 	if request.method == 'POST':
-        max_seconds = 10
+		max_seconds = 10
 		global is_running1
 		global is_running2
 		global relay
