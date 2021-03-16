@@ -32,6 +32,7 @@ sphinx: sudo pip install -U sphinx :https://www.sphinx-doc.org/en/master/usage/i
 pybluez: https://github.com/pybluez/pybluez in README
 libraries: sudo apt-get install libbluetooth-dev
 bluetooth: https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
+waitress: sudo pip install waitress
 
 Hardware Pin Setup (specific for 4 output signals):
 
