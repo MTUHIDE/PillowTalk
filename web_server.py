@@ -51,7 +51,7 @@ def update_settings():
 @app.route('/command', methods=['POST'])
 def command():
 	if request.method == 'POST':
-                max_seconds = 10
+        max_seconds = 10
 		global is_running1
 		global is_running2
 		global relay
@@ -101,7 +101,7 @@ def command():
 			    print "deflating"
 			elif relayName == "cushion_2":
 			    is_running2 = True
-			    relay.relayRun(WaitTime, 4)
+			    relay.relayRun(waitTime, 4)
 			    print "deflating"
 			else:
 			    return index_error("invalid command")
@@ -124,7 +124,7 @@ def command():
 		    if relayName == "cushion_1":
 		        is_running1 = False
 		    elif relayName == "cushion_2":
-			is_running2 = False
+				is_running2 = False
 		    else:
 			return index_error("invalid command")
 

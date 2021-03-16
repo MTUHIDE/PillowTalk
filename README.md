@@ -10,14 +10,29 @@
 #	Keith Vertanen
 #
 
+Downloads:
+STT Engine, waitress
+
+
 The software requires the hardware of a raspberry pi 3 or 4.
 
 If you do not know how to setup a raspberry pi please follow this tutorial:
 https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
 
+The port that must be used for HTTPS is 443.
+The internal and external port might need to be different.
+
 Make sure that the pi is updated and upgraded by using (This will take some time):
 sudo apt update
 sudo apt full-upgrade
+
+Installations
+Flask: sudo pip install -U Flask :https://pypi.org/project/Flask/
+sphinx: sudo pip install -U sphinx :https://www.sphinx-doc.org/en/master/usage/installation.html
+pybluez: https://github.com/pybluez/pybluez in README
+libraries: sudo apt-get install libbluetooth-dev
+bluetooth: https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
+waitress: sudo pip install waitress
 
 Hardware Pin Setup (specific for 4 output signals):
 
