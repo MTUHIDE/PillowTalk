@@ -32,6 +32,7 @@ pybluez: https://github.com/pybluez/pybluez in README
 libraries: sudo apt-get install libbluetooth-dev
 bluetooth: https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
 waitress: sudo pip install waitress
+respeaker: https://github.com/respeaker/seeed-voicecard/issues/192
 
 The port used for HTTPS is 4433
 The external port that must be used for HTTPS is 443.
