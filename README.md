@@ -24,14 +24,17 @@ sudo apt update
 sudo apt full-upgrade
 
 Installations
-Flask: sudo pip install -U Flask :https://pypi.org/project/Flask/
-sphinx: sudo pip install -U sphinx :https://www.sphinx-doc.org/en/master/usage/installation.html
+Flask: sudo pip install -U Flask 
+	also found here: https://pypi.org/project/Flask/
+sphinx: sudo pip install -U sphinx
+	also found here: https://www.sphinx-doc.org/en/master/usage/installation.html
 pybluez: https://github.com/pybluez/pybluez in README
 libraries: sudo apt-get install libbluetooth-dev
 bluetooth: https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
 waitress: sudo pip install waitress
 
-The port that must be used for HTTPS is 443.
+The port used for HTTPS is 4433
+The external port that must be used for HTTPS is 443.
 The internal and external port might need to be different if you want the flask server accessible to external ip.
 
 To run the server, make sure that you are inside of the PillowTalk folder and run "python2.7 web_server.py".
