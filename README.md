@@ -65,5 +65,6 @@ The relays that are connected cannot run if one of them is already running.
 It cannot inflate and deflate at the same time.
 
 -------------------------WARNING-----------------------
+
 The output of the GPIO pins is 3.3V and if anything larger
 than that feeds back to the PI, the board will break.
