@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
+import itertools
 GPIO.setwarnings(False)
 
 class RelayControl:
@@ -45,10 +46,10 @@ class RelayControl:
 			GPIO.output(self.pin4, False)
 		print "Relay Finished"
 
-	#cycle everything based on time given
-	def cycle(self, cushionTime, waitTime, loopNumber):
-		totalTime = (cushionTime * 2) + waitTime
-		print "Starting cycle with estimated cycle total time of " + convert(loopNumber * cushionTime)
+	#cycle everything based on given number of loops
+	def cycleLoop(self, InputTime, outputTime, waitTime, loopNumber):
+		totalTime = InputTime + outputTime + waitTime
+		print "Starting cycle with estimated cycle total time of " + convertSecs(loopNumber * totalTime)
 		for x in range(loopNumber):
 			GPIO.output(self.pin1, True)
 			GPIO.output(self.pin3, True)
@@ -62,15 +63,31 @@ class RelayControl:
 			GPIO.output(self.pin2, False)
 			GPIO.output(self.pin4, False)
 		print "Cycle Complete"
-
+	#cycle everything based on given number of hours
+            #def cycleTime(self, InputTime, outputTime, waitTime, totalHours):
+            #	totalTime = InputTime + outputTime + waitTime
+	#cycle each individual pillow based on given number of hours
+	#def inflateMultiPillow(self, timeInput, timeOutput, timeWait, totalHours):
+	#	if (len(timeInput) != len(timeOutput) or len(timeInput) != len(timeWait)):
+	#		return error
+     # 		seconds = convertHours(totalHours)
+      #		totalLoops = []
+      #		for (i, o, w) in zip(timeInput, timeOutput, timeWait)
+       # 		t = i + o + w
+        #  		totalLoops.append(seconds/t)
+#Finish here!!!
 	#convert seconds given into hour,minute,sec
-	def convert(seconds):
+	def convertSecs(seconds):
 		seconds = seconds % (24 *3600)
 		hour = second // 3600
 		seconds %= 3600
 		minutes = seconds // 60
 		seconds %= 60
 		return  "%d:%02d:%02d" % (hour, minutes, seconds)
+
+	# convert hours to seconds
+	def convertHours(hours):
+		return hours*60*60
 
 	# Reset the pins mode and clean up any changed settings on the pins
 	def exit(self):
