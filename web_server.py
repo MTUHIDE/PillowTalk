@@ -56,7 +56,7 @@ def server_connection_test():
 @app.route('/command', methods=['POST'])
 def command():
 	if request.method == 'POST':
-		max_seconds = 10
+		max_seconds = 60
 		global is_running1
 		global is_running2
 		global relay
@@ -144,8 +144,7 @@ if __name__ == "__main__":
 	s.connect((testIP,0))
 	ip = s.getsockname()[0]
 	hostTest = socket.gethostname()
+	#send back to main ip host test
 	print "IP: " + ip + " HOST: " + hostTest
-
-	host = ip
 	port = "4433"
-	serve(app, host=host, port=port)
+	serve(app, host=ip, port=port)
