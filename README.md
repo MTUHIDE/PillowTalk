@@ -35,7 +35,51 @@ sphinx: sudo pip install -U sphinx
 	
 pybluez: https://github.com/pybluez/pybluez in README
 libraries: sudo apt-get install libbluetooth-dev
-bluetooth: https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
+
+bluetooth permissions:
+
+	1) Copy /lib/systemd/system/bluetooth.service to /etc/systemd/system/bluetooth.service
+	
+	2) Edit the line "ExecStart=/usr/lib/bluetooth/bluetoothd" under [Service] to "ExecStart=/usr/lib/bluetooth/bluetoothd -C' in both bluetooth.service files
+	
+	3) Create the file "/etc/systemd/system/var-run-sdp.path" with
+		[Unit]
+		Descrption=Monitor /var/run/sdp
+		
+		[Install]
+		WantedBy=bluetooth.service
+		
+		[Path]
+		PathExists=/var/run/sdp
+		Unit=var-run-sdp.service
+	
+	4) Create the file "/etc/systemd/system/var-run-sdp.service" with
+		[Unit]
+		Description=Set permission of /var/run/sdp
+
+		[Install]
+		RequiredBy=var-run-sdp.path
+		
+		[Service]
+		Type=simple
+		ExecStart=/bin/chgrp bluetooth /var/run/sdp
+		ExecStartPost=/bin/chmod 662 /var/run/sdp
+		
+	5) run this
+		sudo systemctl daemon-reload
+		sudo systemctl enable var-run-sdp.path
+		sudo systemctl enable var-run-sdp.service
+		sudo systemctl start var-run-sdp.path
+		
+	6) Make sure your pi user is in the bluetooth group:
+		run sudo usermod -G bluetooth -a pi
+	
+	More reading)
+	https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
+	https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
+	https://github.com/pybluez/pybluez/issues/390
+	
+	
 
 waitress: sudo pip install waitress
 
