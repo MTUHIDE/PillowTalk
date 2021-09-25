@@ -1,5 +1,6 @@
+import datetime
 class TextParser:
-    def saveCommand(self, command):
+    def saveString(self, string):
 	counter = 0
 	f = None
 	try:
@@ -10,9 +11,9 @@ class TextParser:
             for line in f:
                 pass
             if line != None:
-		word = line.split(':')[0]
-                if word.isdigit():
-                    counter = int(word)
+		firstWord = line.split(':', 1)[0]
+                if firstWord.isdigit():
+                    counter = int(firstWord)
 	    f.close()
 	try:
 	    f = open("commandDB", 'a')
@@ -20,5 +21,20 @@ class TextParser:
 	    print("cannot open commandDB. Major Issue")
 	else:
 	    counter = counter + 1
-	    f.write(str(counter)+ ": " + command + "\n")
+	    f.write("{0}: '{1}' {2}\n".format(counter, command, datetime.datetime.now()))
 	    f.close()
+
+    def commandSearch(self, string, keyword = None,):
+	#self.saveString(string)
+	words = string.split()
+	command = None
+	if keyword != None:
+	    try:
+	    	index = words.index(keyword)
+	    	command = words[index:index+4]
+	    	print("Command: {0}".format(command))
+	    	print("found keyword '{0}' at index {1} in string '{2}'".format(keyword, index, string))
+	    except ValueError:
+		print("Index does not exist")
+	else:
+	    print("no keyword\n")
