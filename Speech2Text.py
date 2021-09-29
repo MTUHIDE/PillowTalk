@@ -10,15 +10,18 @@ print("hello")
 while True:
     with mic as source:
         audio = r.listen(source)
-    words = r.recognize_google(audio)
-    print(words)
-
-    if words == "exit":
-        print("...")
-        sleep(1)
-        print("...")
-        sleep(1)
-        print("...")
-        sleep(1)
-        print("Goodbye")
-        break
+        
+    try:
+        words = r.recognize_google(audio)
+        print(words)
+        if words == "exit":
+            print("...")
+            sleep(1)
+            print("...")
+            sleep(1)
+            print("...")
+            sleep(1)
+            print("Goodbye")
+            break
+    except:
+        print("Failed to understand")
