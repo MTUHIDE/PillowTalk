@@ -46,11 +46,35 @@ class TextParser:
 	if len(command) < 3:
 	    return -2
 	return command
-
+    # bus 1 inflate pillow 1, bus 2 deflate pillow 1, bus 3 inflate pillow 2, bus 4 deflate pillow 2
     def returnRelay(self, command):
+	relay = None
 	action = command[0]
 	pillow = command[1]
-	time = command[2]
-	if len(command) = 4:
-	    if command[3] = "minute":
+	time = None
+	try:
+	    time = int(command[2])
+	except ValueError as e:
+	    print("Invalid Number")
+
+	if len(command) == 4:
+	    if command[3] == "minute":
 		time = time*60
+	if action == "inflate":
+	    if pillow == "cushion_1":
+		relay = 1
+	    elif pillow == "cushion_2":
+		relay = 3
+	    else:
+		print("Invalid Pillow")
+	elif action == "deflate":
+	    if pillow == "cushion_1":
+                relay = 2
+            elif pillow == "cushion_2":
+                relay = 4
+            else:
+		print("Invalid Pillow")
+	else:
+	    print("Invalid Action")
+
+	return [relay,time]
