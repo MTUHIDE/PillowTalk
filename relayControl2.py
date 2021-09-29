@@ -12,7 +12,7 @@ class RelayControl:
 	# Initalize pin placements and set the pins to output
 	#pin 1inflate pillow 1, pin 2 deflate pillow1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
 	def __init__(self):
-    
+
 	DEVICE_BUS = 1
 	DEVIVE_ADDR = 0x10
 	bus = smbus.SMBus(DEVICE_BUS)
@@ -21,21 +21,31 @@ class RelayControl:
 	def relayRun(self, time, relay):
 		# Assuming pillow 1 is left and Pillow 2 is right
 		if relay == 1:
-			bus.write_byte_data(DEVICE_ADDR, 1, 0xFF)
-			bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+		    bus.write_byte_data(DEVICE_ADDR, 1, 0xFF)
+		    bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
 		elif relay == 2:
-			bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-			bus.write_byte_data(DEVICE_ADDR, 2, 0xFF)
+		    bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
+		    bus.write_byte_data(DEVICE_ADDR, 2, 0xFF)
 		elif relay == 3:
-			bus.write_byte_data(DEVICE_ADDR, 3, 0xFF)
-			bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+		    bus.write_byte_data(DEVICE_ADDR, 3, 0xFF)
+		    bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
 		elif relay == 4:
-			bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-			bus.write_byte_data(DEVICE_ADDR, 4, 0xFF)
-
+		    bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
+		    bus.write_byte_data(DEVICE_ADDR, 4, 0xFF)
+		else:
+		    return -1
 		for x in range(time):
 			sleep(1)
 			print "Relay " + str(relay) + " " + str(x)
+
+		if relay == 1 or relay == 2:
+		    bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
+                    bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+		elif relay == 3 or relay == 4:
+		    bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
+                    bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+		else:
+		    return -1
 
 		print "Relay Finished"
 
