@@ -1,11 +1,6 @@
 from time import sleep
 import itertools
 import smbus
-GPIO.setwarnings(False)
-
-"""
-For the relay control of the motor, the RPI.GPIO may be uneeded.
-"""
 
 """
 ID 1 and 2 are for pillow 1 control, ID 1 for inflating and ID 2 for deflating
