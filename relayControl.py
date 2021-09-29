@@ -5,7 +5,7 @@ GPIO.setwarnings(False)
 
 class RelayControl:
 	# Initalize pin placements and set the pins to output
-	#pin 1inflate pillow 1, pin 2 deflate pillow1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
+	# pin 1 inflate pillow 1, pin 2 deflate pillow 1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
 	def __init__(self):
 		GPIO.setmode(GPIO.BOARD)
 		self.pin1 = 11
