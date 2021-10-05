@@ -12,10 +12,9 @@ class RelayControl:
 	# Initalize pin placements and set the pins to output
 	#pin 1inflate pillow 1, pin 2 deflate pillow1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
 	def __init__(self):
-
-	DEVICE_BUS = 1
-	DEVIVE_ADDR = 0x10
-	bus = smbus.SMBus(DEVICE_BUS)
+		DEVICE_BUS = 1
+		DEVIVE_ADDR = 0x10
+		bus = smbus.SMBus(DEVICE_BUS)
 
 	# Run the specified relay for a specified amount of time
 	def relayRun(self, time, relay):
