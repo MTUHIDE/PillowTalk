@@ -48,6 +48,25 @@ class RelayControl:
 		    return -1
 
 		print "Relay Finished"
+	
+	#cycle everything based on given number of loops
+	def cycleLoop(self, InputTime, outputTime, waitTime, loopNumber):
+		totalTime = InputTime + outputTime + waitTime
+		print "Starting cycle with estimated cycle total time of " + convertSecs(loopNumber * totalTime)
+		for x in range(loopNumber):
+			self.relayRun(0, 1)
+			self.relayRun(waitTime, 3)
+
+			self.relayRun(0, 1)
+			self.relayRun(waitTime, 3)
+
+			self.relayRun(0, 2)
+			self.relayRun(waitTime, 4)			
+
+			self.relayRun(0, 2)
+			self.relayRun(0, 4)
+
+	return "Cycle Complete"
 
 	#convert seconds given into hour,minute,sec
 	def convertSecs(seconds):
