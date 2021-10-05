@@ -66,7 +66,7 @@ class RelayControl:
 			self.relayRun(0, 2)
 			self.relayRun(0, 4)
 
-	return "Cycle Complete"
+		return "Cycle Complete"
 
 	#convert seconds given into hour,minute,sec
 	def convertSecs(seconds):
