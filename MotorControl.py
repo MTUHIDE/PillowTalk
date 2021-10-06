@@ -8,9 +8,11 @@ ID 3 and 4 are for pillow 2 control, ID 3 for inflating and ID 4 for Deflating
 0x00 is off
 0xFF is ON
 """
+
+
 class MotorControl:
 	# Initalize pin placements and set the pins to output
-	#pin 1inflate pillow 1, pin 2 deflate pillow1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
+	# pin 1inflate pillow 1, pin 2 deflate pillow1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
 	def __init__(self):
 		DEVICE_BUS = 1
 		DEVIVE_ADDR = 0x10
@@ -18,60 +20,61 @@ class MotorControl:
 
 	# return -1 error in relay
 	# Run the specified relay for a specified amount of time
-	def relayRun(self, time, relay, relay2 = None):
-		if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 ==1 and relay == 1) or (relay2 == 3 and relay2 == 4):
+	def relayRun(self, time, relay, relay2=None):
+		if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 == 1 and relay == 1) or (
+				relay2 == 3 and relay2 == 4):
 			return -1
 		# Assuming pillow 1 is left and Pillow 2 is right
 		if relay == 1 or relay2 == 1:
-		    bus.write_byte_data(DEVICE_ADDR, 1, 0xFF)
-		    bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
-		elif relay == 2 or relay2 ==2:
-		    bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-		    bus.write_byte_data(DEVICE_ADDR, 2, 0xFF)
+			bus.write_byte_data(DEVICE_ADDR, 1, 0xFF)
+			bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+		elif relay == 2 or relay2 == 2:
+			bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
+			bus.write_byte_data(DEVICE_ADDR, 2, 0xFF)
 		elif relay == 3 or relay2 == 3:
-		    bus.write_byte_data(DEVICE_ADDR, 3, 0xFF)
-		    bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+			bus.write_byte_data(DEVICE_ADDR, 3, 0xFF)
+			bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
 		elif relay == 4 or relay2 == 4:
-		    bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-		    bus.write_byte_data(DEVICE_ADDR, 4, 0xFF)
+			bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
+			bus.write_byte_data(DEVICE_ADDR, 4, 0xFF)
 		else:
-		    return -1
+			return -1
 		for x in range(time):
 			sleep(1)
 			print "Relay " + str(relay) + " " + str(x)
 
 		if relay == 1 or relay == 2 or relay2 == 1 or relay2 == 2:
-		    bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-                    bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+			bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
+			bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
 		elif relay == 3 or relay == 4 or relay2 == 3 or relay2 == 4:
-		    bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-                    bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+			bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
+			bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
 		else:
-		    return -1
+			return -1
 
 		print "Relay Finished"
 		return 0
 
-	#cycle everything based on given number of loops
+	# cycle everything based on given number of loops
 	def cycleLoop(self, InputTime, outputTime, waitTime, loopNumber):
 		totalTime = InputTime + outputTime + waitTime
-		print "Starting cycle with estimated cycle total time of " +timeFormat(loopNumber * totalTime)
+		print "Starting cycle with estimated cycle total time of " + timeFormat(loopNumber * totalTime)
 		for x in range(loopNumber):
 			self.relayRun(InputTime, 1, 3)
 
 			for x in range(waitTime):
-			    sleep(1)
-			    print("wait {}".format(x))
+				sleep(1)
+				print("wait {}".format(x))
 
 			self.relayRun(outputTime, 2, 4)
 
 		return "Cycle Complete"
 
-	#convert seconds given into hour,minute,sec
+	# convert seconds given into hour,minute,sec
 	def timeFormat(seconds):
-		seconds = seconds % (24 *3600)
+		seconds = seconds % (24 * 3600)
 		hour = second // 3600
 		seconds %= 3600
 		minutes = seconds // 60
 		seconds %= 60
-		return  "%d:%02d:%02d" % (hour, minutes, seconds)
+		return "%d:%02d:%02d" % (hour, minutes, seconds)
