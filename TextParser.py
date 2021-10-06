@@ -26,7 +26,7 @@ class TextParser:
 
     # return -2 command not long enough
     # return -1 keyword not found
-    # return command 
+    # return command
     def commandSearch(self, string, keyword = None):
 	words = string.split()
 	command = None
