@@ -14,9 +14,9 @@ class MotorControl:
 	# Initalize pin placements and set the pins to output
 	# pin 1inflate pillow 1, pin 2 deflate pillow1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
 	def __init__(self):
-		DEVICE_BUS = 1
-		DEVIVE_ADDR = 0x10
-		bus = smbus.SMBus(DEVICE_BUS)
+		self._DEVICE_BUS = 1
+		self._DEVICE_ADDR = 0x10
+		self._bus = smbus.SMBus(self._DEVICE_BUS)
 
 	# return -1 error in relay
 	# Run the specified relay for a specified amount of time
@@ -24,56 +24,63 @@ class MotorControl:
 		if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 == 1 and relay == 1) or (
 				relay2 == 3 and relay2 == 4):
 			return -1
+		if relay <= 0 or relay > 4 or relay2 <=0 or relay > 4:
+			return -1
 		# Assuming pillow 1 is left and Pillow 2 is right
 		if relay == 1 or relay2 == 1:
-			bus.write_byte_data(DEVICE_ADDR, 1, 0xFF)
-			bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
-		elif relay == 2 or relay2 == 2:
-			bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-			bus.write_byte_data(DEVICE_ADDR, 2, 0xFF)
-		elif relay == 3 or relay2 == 3:
-			bus.write_byte_data(DEVICE_ADDR, 3, 0xFF)
-			bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
-		elif relay == 4 or relay2 == 4:
-			bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-			bus.write_byte_data(DEVICE_ADDR, 4, 0xFF)
-		else:
-			return -1
+			self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0xFF)
+			self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
+		if relay == 2 or relay2 == 2:
+			self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
+			self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0xFF)
+		if relay == 3 or relay2 == 3:
+			self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0xFF)
+			self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
+		if relay == 4 or relay2 == 4:
+			self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
+			self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0xFF)
 		for x in range(time):
 			sleep(1)
-			print "Relay " + str(relay) + " " + str(x)
+			if relay2 != None:
+				print("Relay {},{} on {} second".format(relay, relay2, x))
+			else:
+				print("Relay {} on {} second".format(relay, x))
 
 		if relay == 1 or relay == 2 or relay2 == 1 or relay2 == 2:
-			bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-			bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
-		elif relay == 3 or relay == 4 or relay2 == 3 or relay2 == 4:
-			bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-			bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
-		else:
-			return -1
+			self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
+			self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
+		if relay == 3 or relay == 4 or relay2 == 3 or relay2 == 4:
+			self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
+			self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 
-		print "Relay Finished"
+		print ("Relay Finished")
 		return 0
 
 	# cycle everything based on given number of loops
-	def cycleLoop(self, InputTime, outputTime, waitTime, loopNumber):
-		totalTime = InputTime + outputTime + waitTime
-		print "Starting cycle with estimated cycle total time of " + timeFormat(loopNumber * totalTime)
-		for x in range(loopNumber):
-			self.relayRun(InputTime, 1, 3)
+	def cycleLoop(self, inputTime, outputTime, waitTime, loopNumber):
+		totalTime = inputTime + outputTime + (waitTime*2-waitTime)
+		totalLoopTime = totalTime*loopNumber
+		print ("Starting cycle with estimated cycle total time of {}".format(self.timeFormat(totalLoopTime)))
+		for i in range(loopNumber):
+			print("On Loop {}".format(i))
+			self.relayRun(inputTime, 1, 3)
 
-			for x in range(waitTime):
+			for j in range(waitTime):
 				sleep(1)
-				print("wait {}".format(x))
+				print("wait {}".format(j))
 
 			self.relayRun(outputTime, 2, 4)
+			if i < loopNumber-1:
+				for j in range(waitTime):
+                                	sleep(1)
+                                	print("wait {}".format(j))
 
 		return "Cycle Complete"
 
 	# convert seconds given into hour,minute,sec
-	def timeFormat(seconds):
+	def timeFormat(self, seconds):
 		seconds = seconds % (24 * 3600)
-		hour = second // 3600
+		hour = seconds // 3600
 		seconds %= 3600
 		minutes = seconds // 60
 		seconds %= 60
