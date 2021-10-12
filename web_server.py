@@ -77,10 +77,10 @@ def command():
 		# Check to see if the specified cushion is in use
 		if relayName == "cushion_1" and is_running1:
 		    return index_error("Already running that command")
-		    print "already running cushion1"
+		    print ("already running cushion1")
 		elif relayName == "cushion_2" and is_running2:
                     return index_error("already running that command")
-		    print "already running cushion2"
+		    print ("already running cushion2")
 
 		# Check to see if the specified time requested for the relay is not out of bounds
 		if waitTime > max_seconds or waitTime < 0:
@@ -103,25 +103,25 @@ def command():
                         if relayName == "cushion_1":
 			    is_running1 = True
 			    relay.relayRun(waitTime, 3)
-			    print "deflating"
+			    print ("deflating")
 			elif relayName == "cushion_2":
 			    is_running2 = True
 			    relay.relayRun(waitTime, 4)
-			    print "deflating"
+			    print ("deflating")
 			else:
 			    return index_error("invalid command")
 
-                        print "deflating " + relayName + " for " + str(waitTime) + " seconds"
+                        print ("deflating " + relayName + " for " + str(waitTime) + " seconds")
 
                     else:
                         return index_error("Invalid command")
 		# Keyboard interrupt exception handler
                 except KeyboardInterrupt:
-                    print "\nWhy did keyboard stop program\n"
+                    print( "\nWhy did keyboard stop program\n")
 		    relay.exit()
 		# Other interrupt exception handler
                 except Exception:
-                    print "\nWhy did something else stop program\n"
+                    print ("\nWhy did something else stop program\n")
                     traceback.print_exc()
 
                 finally:
@@ -145,6 +145,6 @@ if __name__ == "__main__":
 	ip = s.getsockname()[0]
 	hostTest = socket.gethostname()
 	#send back to main ip host test
-	print "IP: " + ip + " HOST: " + hostTest
+	print ("IP: " + ip + " HOST: " + hostTest)
 	port = "4433"
 	serve(app, host=ip, port=port)
