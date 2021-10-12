@@ -30,9 +30,9 @@ try:
             break
         data = data.decode('utf-8')
         # todo send data to TextParser.py 
-        #print(data)
+        # print(data)
         command = textParser.commandSearch(data)
-        if command is not -1 and command is not -2:
+        if command != -1 and command != -2:
             relayCommand = textParser.returnRelay(command)
             print(relayCommand)
 except OSError:
