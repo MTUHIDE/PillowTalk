@@ -1,4 +1,4 @@
-# requires python2.7
+#port is 4433
 # importing flask module
 from flask import Flask, render_template, request, flash, redirect, url_for
 from waitress import serve
