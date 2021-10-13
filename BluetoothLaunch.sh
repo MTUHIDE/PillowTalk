@@ -2,8 +2,8 @@
 # Navigate home, then to the directory containing the script, then home again
 
 cd /
-cd home/pi/ # file location
-sudo python3 bluetooth_service.py # replace this with seperate launch script if we decide to do that
+cd home/pi/PillowTalk # file location
+python3 bluetooth_service.py # replace this with seperate launch script if we decide to do that
 cd /
 
 # make script available with chmod "755 BluetoothLaunch.sh"
