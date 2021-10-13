@@ -19,42 +19,73 @@ class MotorControl:
 		self._bus = smbus.SMBus(self._DEVICE_BUS)
 
 	# return -1 error in relay
+	# return -2 Motor stopped early
 	# Run the specified relay for a specified amount of time
-	def relayRun(self, time, relay, relay2=None):
-		if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 == 1 and relay == 1) or (
-				relay2 == 3 and relay2 == 4):
-			return -1
-		if relay <= 0 or relay > 4 or relay2 <=0 or relay > 4:
+	def relayRun(self, time, relay):
+		if relay <= 0 or relay > 4:
 			return -1
 		# Assuming pillow 1 is left and Pillow 2 is right
-		if relay == 1 or relay2 == 1:
+		if relay == 1:
 			self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0xFF)
 			self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
-		if relay == 2 or relay2 == 2:
+		if relay == 2:
 			self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
 			self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0xFF)
-		if relay == 3 or relay2 == 3:
+		if relay == 3:
 			self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0xFF)
 			self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
-		if relay == 4 or relay2 == 4:
+		if relay == 4:
 			self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
 			self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0xFF)
 		for x in range(time):
+			if self._bus.read_byte_data(self._DEVICE_ADDR, relay) == 0:
+				return -2
+			#print("{}: {}".format(relay, self._bus.read_byte_data(self._DEVICE_ADDR, relay)))
 			sleep(1)
-			if relay2 != None:
-				print("Relay {},{} on {} second".format(relay, relay2, x))
-			else:
-				print("Relay {} on {} second".format(relay, x))
+			print("Relay {} on {} second".format(relay, x))
 
-		if relay == 1 or relay == 2 or relay2 == 1 or relay2 == 2:
+		if relay == 1 or relay == 2:
 			self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
 			self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
-		if relay == 3 or relay == 4 or relay2 == 3 or relay2 == 4:
+		if relay == 3 or relay == 4:
 			self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
 			self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 
 		print ("Relay Finished")
 		return 0
+
+	def relayRun2(self, time, relay, relay2):
+                if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 == 1 and relay == 1) or (
+                                relay2 == 3 and relay2 == 4):
+                        return -1
+                if relay <= 0 or relay > 4 or relay2 <=0 or relay2 > 4:
+                        return -1
+                # Assuming pillow 1 is left and Pillow 2 is right
+                if relay == 1 or relay2 == 1:
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0xFF)
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
+                if relay == 2 or relay2 == 2:
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0xFF)
+                if relay == 3 or relay2 == 3:
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0xFF)
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
+                if relay == 4 or relay2 == 4:
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0xFF)
+                for x in range(time):
+                        sleep(1)
+                        print("Relay {},{} on {} second".format(relay, relay2, x))
+
+                if relay == 1 or relay == 2 or relay2 == 1 or relay2 == 2:
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
+                if relay == 3 or relay == 4 or relay2 == 3 or relay2 == 4:
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
+                        self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
+
+                print ("Relay Finished")
+                return 0
 
 	# cycle everything based on given number of loops
 	def cycleLoop(self, inputTime, outputTime, waitTime, loopNumber):

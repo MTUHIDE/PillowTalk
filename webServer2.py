@@ -15,6 +15,7 @@ app = Flask(__name__)
 from MotorControl import *
 from TextParser import *
 text = TextParser()
+motor = MotorControl()
 
 # decorating index function with the app.route
 @app.route('/')
@@ -57,7 +58,7 @@ def server_connection_test():
 @app.route('/command', methods=['POST'])
 def command():
     if request.method == 'POST':
-      #submit command for error checking and return relay
+        #submit command for error checking and return relay
         command_form = request.form['command']
         print(command_form)
         command = text.commandSearch(command_form)
@@ -73,7 +74,8 @@ def command():
         elif relay == -3:
             return index_error("Invalid Inflatable")
 
-    #motor function
+        #activate motors
+        motor.relayRun(relay[1], relay[0])
 
     return index()
 
