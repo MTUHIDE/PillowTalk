@@ -34,7 +34,7 @@ class RelayControl:
 
 		for x in range(time):
 			sleep(1)
-			print "Relay " + str(pin) + " " + str(x)
+			print( "Relay " + str(pin) + " " + str(x))
 
 		if relay == 1:
 			GPIO.output(self.pin1, False)
@@ -44,12 +44,12 @@ class RelayControl:
 			GPIO.output(self.pin3, False)
 		elif relay == 4:
 			GPIO.output(self.pin4, False)
-		print "Relay Finished"
+		print ("Relay Finished")
 
 	#cycle everything based on given number of loops
 	def cycleLoop(self, InputTime, outputTime, waitTime, loopNumber):
 		totalTime = InputTime + outputTime + waitTime
-		print "Starting cycle with estimated cycle total time of " + convertSecs(loopNumber * totalTime)
+		print ("Starting cycle with estimated cycle total time of " + convertSecs(loopNumber * totalTime))
 		for x in range(loopNumber):
 			GPIO.output(self.pin1, True)
 			GPIO.output(self.pin3, True)
@@ -62,7 +62,7 @@ class RelayControl:
 			sleep(cushionTime-1)
 			GPIO.output(self.pin2, False)
 			GPIO.output(self.pin4, False)
-		print "Cycle Complete"
+		print ("Cycle Complete")
 	#cycle everything based on given number of hours
             #def cycleTime(self, InputTime, outputTime, waitTime, totalHours):
             #	totalTime = InputTime + outputTime + waitTime
