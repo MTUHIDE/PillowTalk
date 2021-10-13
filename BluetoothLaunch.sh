@@ -2,7 +2,7 @@
 # Navigate home, then to the directory containing the script, then home again
 
 cd /
-cd home/pi/PillowTalk # file location
+cd home/pi/PillowTalk || exit # file location
 python3 bluetooth_service.py # replace this with seperate launch script if we decide to do that
 cd /
 
