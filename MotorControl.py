@@ -53,7 +53,8 @@ class MotorControl:
 
 		print ("Relay Finished")
 		return 0
-
+	#return -1 error in relay
+	#return -2 Motor Stopped early
 	def relayRun2(self, time, relay, relay2):
                 if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 == 1 and relay == 1) or (
                                 relay2 == 3 and relay2 == 4):
@@ -74,6 +75,8 @@ class MotorControl:
                         self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
                         self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0xFF)
                 for x in range(time):
+			if self._bus.read_byte_data(self._DEVICE_ADDR, relay) == 0 or self._bus.read_byte_data(self._DEVICE_ADDR, relay2) == 0:
+                                return -2
                         sleep(1)
                         print("Relay {},{} on {} second".format(relay, relay2, x))
 
@@ -94,8 +97,8 @@ class MotorControl:
 		print ("Starting cycle with estimated cycle total time of {}".format(self.timeFormat(totalLoopTime)))
 		for i in range(loopNumber):
 			print("On Loop {}".format(i))
-			self.relayRun(inputTime, 1, 3)
-
+			if self.relayRun2(inputTime, 1, 3) == -2:
+				break;
 			for j in range(waitTime):
 				sleep(1)
 				print("wait {}".format(j))
