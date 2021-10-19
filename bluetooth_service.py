@@ -4,7 +4,8 @@ import TextParser
 
 power_on = True
 
-def runServer():
+
+def run_server():
     text_parser = TextParser.TextParser()
     server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     server_sock.bind(("", bluetooth.PORT_ANY))
@@ -32,12 +33,17 @@ def runServer():
             if not data:
                 break
             data = data.decode('utf-8')
-            # todo send data to TextParser.py 
-            # print(data)
+
+            # parse the data into a command
             command = text_parser.commandSearch(data)
+
+            # if it was a valid command, convert it to a relay command
             if command != -1 and command != -2:
-                relayCommand = text_parser.returnRelay(command)
-                print(relayCommand)
+                relay_command = text_parser.returnRelay(command)
+                print(relay_command)
+
+            # TODO pass the relay command to the relay control to actually make the motors go
+
     except OSError:
         pass
 
@@ -47,10 +53,11 @@ def runServer():
     server_sock.close()
     print("All done.")
 
+
 def main():
     while power_on:
-        runServer()
-    
+        run_server()
+
 
 if __name__ == "__main__":
     main()
