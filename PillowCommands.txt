@@ -1,0 +1,20 @@
+Keywords
+PillowTalk
+
+FirstPillow
+Cusion One
+Pillow One
+Left Pillow
+Pillow A
+
+SecondPillow
+Cusion Two
+Pillow Two
+Right Pillow
+Pillow B
+
+Functions
+Inflate
+Deflate
+Stop All
+Stop
