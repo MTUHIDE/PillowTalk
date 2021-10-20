@@ -44,6 +44,9 @@ def run_server():
 
             # TODO pass the relay command to the relay control to actually make the motors go
 
+            # send the command back up to the app so that it can verify it sent
+            client_sock.send(data)  # currently echos the data sent
+
     except OSError:
         pass
 
