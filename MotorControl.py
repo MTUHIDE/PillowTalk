@@ -18,6 +18,11 @@ class MotorControl:
 		self._DEVICE_ADDR = 0x10
 		self._bus = smbus.SMBus(self._DEVICE_BUS)
 
+	def stopAll(self):
+		self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
+		self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
+		self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
+		self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 	# return -1 error in relay
 	# return -2 Motor stopped early
 	# Run the specified relay for a specified amount of time
@@ -56,8 +61,7 @@ class MotorControl:
 	#return -1 error in relay
 	#return -2 Motor Stopped early
 	def relayRun2(self, time, relay, relay2):
-                if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 == 1 and relay == 1) or (
-                                relay2 == 3 and relay2 == 4):
+                if (relay == 1 and relay2 == 2) or (relay == 3 and relay2 == 4) or (relay2 == 1 and relay == 1) or (relay2 == 3 and relay2 == 4):
                         return -1
                 if relay <= 0 or relay > 4 or relay2 <=0 or relay2 > 4:
                         return -1
@@ -75,7 +79,7 @@ class MotorControl:
                         self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
                         self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0xFF)
                 for x in range(time):
-			if self._bus.read_byte_data(self._DEVICE_ADDR, relay) == 0 or self._bus.read_byte_data(self._DEVICE_ADDR, relay2) == 0:
+                        if self._bus.read_byte_data(self._DEVICE_ADDR, relay) == 0 or self._bus.read_byte_data(self._DEVICE_ADDR, relay2) == 0:
                                 return -2
                         sleep(1)
                         print("Relay {},{} on {} second".format(relay, relay2, x))
@@ -92,24 +96,25 @@ class MotorControl:
 
 	# cycle everything based on given number of loops
 	def cycleLoop(self, inputTime, outputTime, waitTime, loopNumber):
-		totalTime = inputTime + outputTime + (waitTime*2-waitTime)
-		totalLoopTime = totalTime*loopNumber
-		print ("Starting cycle with estimated cycle total time of {}".format(self.timeFormat(totalLoopTime)))
-		for i in range(loopNumber):
-			print("On Loop {}".format(i))
-			if self.relayRun2(inputTime, 1, 3) == -2:
-				break;
-			for j in range(waitTime):
-				sleep(1)
-				print("wait {}".format(j))
+                totalTime = inputTime + outputTime + (waitTime*2-waitTime)
+                totalLoopTime = totalTime*loopNumber
+                print ("Starting cycle with estimated cycle total time of {}".format(self.timeFormat(totalLoopTime)))
+                for i in range(loopNumber):
+                        print("On Loop {}".format(i))
+                        if self.relayRun2(inputTime, 1, 3) == -2:
+                                break;
+                        for j in range(waitTime):
+                                sleep(1)
+                                print("wait {}".format(j))
 
-			self.relayRun(outputTime, 2, 4)
-			if i < loopNumber-1:
-				for j in range(waitTime):
-                                	sleep(1)
-                                	print("wait {}".format(j))
+                        if self.relayRun2(outputTime, 2, 4) == -2:
+                                break;
+                        if i < loopNumber-1:
+                                for j in range(waitTime):
+                                        sleep(1)
+                                        print("wait {}".format(j))
 
-		return "Cycle Complete"
+                return "Cycle Complete"
 
 	# convert seconds given into hour,minute,sec
 	def timeFormat(self, seconds):

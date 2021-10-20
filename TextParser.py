@@ -25,9 +25,18 @@ class TextParser:
 			counter = counter + 1
 			f.write("{0}: '{1}' {2}\n".format(counter, string, datetime.datetime.now()))
 			f.close()
+	#return -1 Error opening file
+        def openDictionary(self):
+            f = None
+            try:
+                f = open("commandDB", 'r')
+            except IOError:
+                return -1
+
 
 	# return -2 command not long enough
 	# return -1 keyword not found
+	# return 0
 	# return command
 	def commandSearch(self, string, keyword=None):
 		words = string.split()
