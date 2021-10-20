@@ -75,8 +75,8 @@ def command():
             return index_error("Invalid Inflatable")
 
         #activate motors
-        motor.relayRun(relay[1], relay[0])
-
+        if motor.relayRun(relay[1], relay[0]) == -1:
+            return index_error("error in relay")
     return index()
 
 if __name__ == "__main__":
@@ -89,4 +89,7 @@ if __name__ == "__main__":
     # send back to main ip host test
     print("IP: " + ip + " HOST: " + hostTest)
     port = "4433"
-    serve(app, host=ip, port=port)
+    try:
+        serve(app, host=ip, port=port)
+    finally:
+        motor.stopAll()
