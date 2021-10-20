@@ -1,20 +1,30 @@
-Keywords
+Keywords:
 PillowTalk
 
-FirstPillow
+FirstPillow:
 Cusion One
 Pillow One
 Left Pillow
 Pillow A
 
-SecondPillow
+SecondPillow:
 Cusion Two
 Pillow Two
 Right Pillow
 Pillow B
 
-Functions
+Functions:
 Inflate
 Deflate
 Stop All
 Stop
+
+Time:
+Sixty seconds
+One minute
+One minutes
+Fifteen minutes
+Twenty minutes
+Twenty-five minutes
+Thirty minutes
+Fourty minutes
