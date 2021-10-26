@@ -1,8 +1,5 @@
 import datetime
 
-keys = {}
-
-
 class TextParser:
     def saveString(self, string):
         counter = 0
@@ -31,6 +28,7 @@ class TextParser:
     # return -1 Error opening file
     def openDictionary(self):
         f = None
+	keys = {}
         try:
             f = open("PillowCommands.txt", "r")
         except IOError:
@@ -46,8 +44,8 @@ class TextParser:
                 else:
                     if line != "\n":
                         keys[tempKey].append(line.split("\n")[0])
-        
-        return keys
+            f.close()
+            return keys
 
     # return -2 command not long enough
     # return -1 keyword not found
