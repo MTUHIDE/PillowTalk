@@ -45,7 +45,9 @@ class TextParser:
                     keys[tempKey] = []  # Add the key into the dictionary
                 else:
                     if line != "\n":
-                        keys[tempKey].append(line.split("\n")[0]) 
+                        keys[tempKey].append(line.split("\n")[0])
+        
+        return keys
 
     # return -2 command not long enough
     # return -1 keyword not found
