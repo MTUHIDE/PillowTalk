@@ -28,7 +28,7 @@ class TextParser:
     # return -1 Error opening file
     def openDictionary(self):
         f = None
-	keys = {}
+        keys = {}
         try:
             f = open("PillowCommands.txt", "r")
         except IOError:
