@@ -1,6 +1,12 @@
 import datetime
 
 class TextParser:
+    def __init__(self):
+        self._dictionary = self.openDictionary()
+
+    def getDictValues(self, key):
+        return self._dictionary[key]
+
     def saveString(self, string):
         counter = 0
         f = None
@@ -28,7 +34,6 @@ class TextParser:
     # return -1 Error opening file
     def openDictionary(self):
         f = None
-        keys = {}
         try:
             f = open("PillowCommands.txt", "r")
         except IOError:
