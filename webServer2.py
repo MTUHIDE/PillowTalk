@@ -59,7 +59,7 @@ def server_connection_test():
 def command():
     if request.method == 'POST':
         #submit command for error checking and return relay
-        command_form = request.form['command']
+	command_form = request.form['command']
         print(command_form)
         command = text.commandSearch(command_form)
         print(command)
