@@ -3,6 +3,9 @@ import datetime
 class TextParser:
     def __init__(self):
         self._dictionary = self.openDictionary()
+        if self._dictionary == -1:
+            self._dictionary = None
+            print("dictionary was not pulled")
 
     def getDictValues(self, key):
         return self._dictionary[key]
@@ -57,19 +60,24 @@ class TextParser:
     # return -1 keyword not found
     # return 0
     # return command
-    def commandSearch(self, string, keyword=None):
+    def commandSearch(self, string, keyword=False):
         words = string.split()
         command = None
-        if keyword != None:
-            try:
-                index = words.index(keyword)
-                command = words[index + 1 : index + 5]
-                print("Command: {0}".format(command))
-                print("found keyword '{0}' at index {1} in string '{2}'".format( keyword, index, string))
-            except ValueError as e:
-                # self.saveString("Keyword:'{0}' not found in '{1}'".format(keyword, string)
-                print("Index does not exist")
-                return -1
+        if keyword:
+            keywordValues = self.getDictValues("Keywords")
+            for i, values in enumerate(keywordValues):
+                try:
+                    index = words.index(values)
+                    command = words[index + 1 : index + 6]
+                    print("Command: {0}".format(command))
+                    print("found keyword '{0}' at index {1} in string '{2}'".format( keyword, index, string))
+                    break
+                except ValueError as e:
+                    print("{0} {1}".format(i, len(keywordValues)-1))
+                    # self.saveString("Keyword:'{0}' not found in '{1}'".format(keyword, string)
+                    if i != len(keywordValues)-1:
+                        return -1
+                    continue
         else:
             command = words
 
