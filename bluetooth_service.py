@@ -1,5 +1,7 @@
 import bluetooth
 import os
+
+import MotorControl
 import TextParser
 import relayControl
 
@@ -8,7 +10,7 @@ power_on = True
 
 def run_server():
     text_parser = TextParser.TextParser()
-    relay_control = relayControl.RelayControl()
+    motor_control = MotorControl.MotorControl()
 
     server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     server_sock.bind(("", bluetooth.PORT_ANY))
@@ -43,7 +45,7 @@ def run_server():
             # if it was a valid command, convert it to a relay command
             if command != -1 and command != -2:
                 relay_command = text_parser.returnRelay(command)
-                relay_control.relayRun(relay_command[1], relay_command[0])
+                motor_control.relayRun(relay_command[1], relay_command[0])
                 print(relay_command)
 
 
