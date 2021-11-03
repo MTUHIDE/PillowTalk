@@ -81,10 +81,12 @@ bluetooth permissions:
 	https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
 	https://github.com/pybluez/pybluez/issues/390
 	
-run bluethooth_service.py on user login)
-without graphical terminal emulator
+run bluethooth_service.py on user login:
+
+	without graphical terminal emulator
 	add 'python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
-with graphical terminal emulator
+
+	with graphical terminal emulator
 	add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
 	
 
