@@ -38,9 +38,9 @@ libraries: sudo apt-get install libbluetooth-dev
 
 bluetooth permissions:
 
-	1) Copy /lib/systemd/system/bluetooth.service to /etc/systemd/system/bluetooth.service
+	1) Edit the line "ExecStart=/usr/lib/bluetooth/bluetoothd" under [Service] to "ExecStart=/usr/lib/bluetooth/bluetoothd -C' in /lib/systemd/system/bluetooth.service
 	
-	2) Edit the line "ExecStart=/usr/lib/bluetooth/bluetoothd" under [Service] to "ExecStart=/usr/lib/bluetooth/bluetoothd -C' in both bluetooth.service files
+	2) Copy /lib/systemd/system/bluetooth.service to /etc/systemd/system/bluetooth.service
 	
 	3) Create the file "/etc/systemd/system/var-run-sdp.path" with
 		[Unit]
@@ -72,7 +72,9 @@ bluetooth permissions:
 		sudo systemctl start var-run-sdp.path
 		
 	6) Make sure your pi user is in the bluetooth group:
-		run sudo usermod -G bluetooth -a pi
+		sudo usermod -G bluetooth -a pi
+		
+	7) Reboot pi
 	
 	More reading)
 	https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
@@ -80,7 +82,10 @@ bluetooth permissions:
 	https://github.com/pybluez/pybluez/issues/390
 	
 run bluethooth_service.py on user login:
-	add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to '~/.profile'
+	without termal emu
+		add 'python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
+	with termal emu
+		add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
 	
 
 waitress: sudo pip install waitress
