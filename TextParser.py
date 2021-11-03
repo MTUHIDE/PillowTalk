@@ -52,7 +52,7 @@ class TextParser:
                     keys[tempKey] = []  # Add the key into the dictionary
                 else:
                     if line != "\n":
-                        keys[tempKey].append(line.split("\n")[0])
+                        keys[tempKey].append(line.split("\n")[0].lower())
             f.close()
             return keys
 
@@ -61,7 +61,7 @@ class TextParser:
     # return 0
     # return command
     def commandSearch(self, string, keyword=False):
-        words = string.split()
+        words = string.lower().split()
         command = None
         if keyword:
             keywordValues = self.getDictValues("Keywords")
@@ -75,7 +75,7 @@ class TextParser:
                 except ValueError as e:
                     print("{0} {1}".format(i, len(keywordValues)-1))
                     # self.saveString("Keyword:'{0}' not found in '{1}'".format(keyword, string)
-                    if i != len(keywordValues)-1:
+                    if i == len(keywordValues)-1:
                         return -1
                     continue
         else:
