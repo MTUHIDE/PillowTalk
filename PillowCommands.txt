@@ -1,5 +1,7 @@
 Keywords:
 PillowTalk
+wake
+ALEXA
 
 FirstPillow:
 Cusion One
