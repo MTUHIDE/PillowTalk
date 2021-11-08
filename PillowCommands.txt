@@ -1,23 +1,25 @@
 Keywords:
 PillowTalk
 
+Pillow commands:
+Cushion
+Pillow
+
 FirstPillow:
-Cusion One
-Pillow One
-Left Pillow
-Pillow A
+Left 
+A
+First
 
 SecondPillow:
-Cusion Two
-Pillow Two
-Right Pillow
-Pillow B
+Right
+B
+Second
 
 Functions:
 Inflate
 Deflate
-Stop All
 Stop
+StopAll
 
 Time:
 Sixty seconds

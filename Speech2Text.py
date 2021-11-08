@@ -22,18 +22,18 @@ while True:
         print(command)
         if command == -2:
             print("Command incomplete")
-            break
+            
         relay = text.returnRelay(command)
         print(relay)
         if relay ==-1:
             print("Invalid Number")
-            break
+            
         elif relay == -2:
             print("Invalid Action")
-            break
+            
         elif relay == -3:
             print("Invalid Inflatable")
-            break
+            
         
     except:
         print("Failed to understand")

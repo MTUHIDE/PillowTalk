@@ -79,26 +79,27 @@ class TextParser:
         relay = None
         action = command[0]
         pillow = command[1]
+        pi= command[2]
         time = None
         try:
-            time = int(command[2])
+            time = int(command[3])
         except ValueError as e:
             return -1
 
-        if len(command) == 4:
-            if command[3] == "minute":
+        if len(command) == 5:
+            if command[4] == "minute":
                 time = time * 60
         if action == "inflate":
-            if pillow == "cushion_1":
+            if pi == "a":
                 relay = 1
-            elif pillow == "cushion_2":
+            elif pi == "be":
                 relay = 3
             else:
                 return -3
         elif action == "deflate":
-            if pillow == "cushion_1":
+            if pi == "a":
                 relay = 2
-            elif pillow == "cushion_2":
+            elif pi == "be":
                 relay = 4
             else:
                 return -3
