@@ -89,16 +89,16 @@ class TextParser:
             if command[3] == "minute":
                 time = time * 60
         if action == "inflate":
-            if pillow == "cushion_1":
+            if pillow == "left":
                 relay = 1
-            elif pillow == "cushion_2":
+            elif pillow == "right" or pillow =="write":
                 relay = 3
             else:
                 return -3
         elif action == "deflate":
-            if pillow == "cushion_1":
+            if pillow == "left":
                 relay = 2
-            elif pillow == "cushion_2":
+            elif pillow == "right" or pillow =="write":
                 relay = 4
             else:
                 return -3
