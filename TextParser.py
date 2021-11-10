@@ -85,8 +85,8 @@ class TextParser:
         except ValueError as e:
             return -1
 
-        if len(command) == 5:
-            if command[4] == "minute":
+        if len(command) == 4:
+            if command[3] == "minute":
                 time = time * 60
         if action == "inflate":
             if pillow == "left":
