@@ -1,12 +1,16 @@
+
 import speech_recognition as sr
 from datetime import date
 from time import sleep
 from TextParser import *
+from relayControl import *
+from MotorControl import *
+motor = MotorControl()
 
 r = sr.Recognizer()
 mic = sr.Microphone()
 text = TextParser()
-wakeWord = "wake"
+wakeWord = "pillow"
 
 print("hello")
 
@@ -22,18 +26,17 @@ while True:
         print(command)
         if command == -2:
             print("Command incomplete")
-            
+
         relay = text.returnRelay(command)
         print(relay)
         if relay ==-1:
             print("Invalid Number")
-            
         elif relay == -2:
             print("Invalid Action")
-            
         elif relay == -3:
             print("Invalid Inflatable")
-            
-        
+        else:
+            motor.relayRun(relay[1], relay[0])
+
     except:
         print("Failed to understand")
