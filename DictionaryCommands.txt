@@ -1,5 +1,8 @@
 Wakewords:
 PillowTalk
+Alexa
+Echo
+Google
 
 Functions:
 Inflate
@@ -9,25 +12,31 @@ quit
 exit
 off
 
-PillowCheck:
+PillowCheck1:
 Left 
 A
 First
 one 
 1
 1st
+
+PillowCheck2:
 Right
 B
 Second
 two
 2
 2nd
+
+PillowCheckAll:
 all
 both
 
-Pillow commands:
+Pillow Extra:
 Cushion
 Pillow
+Pillows
+Cushions
 
 TimeAmount:
 one
