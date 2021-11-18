@@ -4,6 +4,7 @@ import os
 import MotorControl
 import TextParser
 import relayControl
+import _thread
 
 power_on = True
 
@@ -39,16 +40,18 @@ def run_server():
                 break
             data = data.decode('utf-8')
 
-            # parse the data into a command
-            command = text_parser.commandSearch(data)
+            if data == 'STOP_ALL':
+                motor_control.stopAll()
+            else:
+                # parse the data into a command
+                command = text_parser.commandSearch(data)
 
-            # if it was a valid command, convert it to a relay command
-            if command != -1 and command != -2:
-                relay_command = text_parser.returnRelay(command)
-                motor_control.relayRun(relay_command[1], relay_command[0])
-                print(relay_command)
-
-
+                # if it was a valid command, convert it to a relay command
+                if command != -1 and command != -2:
+                    relay_command = text_parser.returnRelay(command)
+                    print(relay_command)
+                    if relay_command != -1 and relay_command != -2 and relay_command != -3:
+                        _thread.start_new_thread(motor_control.relayRun, (relay_command[1], relay_command[0],))
 
             # send the command back up to the app so that it can verify it sent
             client_sock.send(data)  # currently echos the data sent
