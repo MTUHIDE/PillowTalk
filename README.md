@@ -6,6 +6,7 @@
 #	Javen Zamojcin
 #       Jacob Allen
 #       Patrick Janssen
+#   Mark Washington
 # Advisor:
 #	Keith Vertanen
 #
