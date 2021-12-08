@@ -7,6 +7,7 @@ import relayControl
 import _thread
 
 power_on = True
+os.system('sudo hciconfig hci0 piscan')
 
 
 def run_server():
