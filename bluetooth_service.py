@@ -8,7 +8,6 @@ import _thread
 
 power_on = True
 
-
 def run_server():
     text_parser = TextParser.TextParser()
     motor_control = MotorControl.MotorControl()
@@ -67,6 +66,7 @@ def run_server():
 
 
 def main():
+    os.system('sudo hciconfig hci0 piscan')
     while power_on:
         run_server()
 

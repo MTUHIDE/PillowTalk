@@ -1,12 +1,16 @@
 # PillowTalk
 #
 # Worked on by:
-#	Isaac Long
-#	Ian Lawrie
-#	Javen Zamojcin
-#       Jacob Allen
-#       Patrick Janssen
-#   Mark Washington
+- Isaac Long
+- Ian Lawrie
+- Javen Zamojcin
+- Jacob Allen
+- Patrick Janssen
+- Michelle Perini
+- Josh Overbeek
+- Thawng Hmung
+- Mark Washington
+
 # Advisor:
 #	Keith Vertanen
 #
