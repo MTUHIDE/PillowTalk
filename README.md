@@ -9,6 +9,7 @@
 - Michelle Perini
 - Josh Overbeek
 - Thawng Hmung
+- Mark Washington
 
 # Advisor:
 #	Keith Vertanen
