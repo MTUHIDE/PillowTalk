@@ -3,7 +3,7 @@ import os
 
 import MotorControl
 import TextParser
-import relayControl
+import RelayControl
 import _thread
 
 power_on = True

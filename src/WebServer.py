@@ -7,7 +7,7 @@ import json
 import traceback
 import socket
 # implementation of motorControl Class
-from relayControl import *
+from RelayControl import *
 
 # initializing a variable of Flask
 app = Flask(__name__)

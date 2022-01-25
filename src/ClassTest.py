@@ -1,5 +1,5 @@
 from time import sleep
-from voiceControl import *
+from VoiceControl import *
 
 listen = VoiceControl()
 listen.listenControl()
