@@ -89,10 +89,10 @@ bluetooth permissions:
 run bluethooth_service.py on user login:
 
 	without graphical terminal emulator
-	add 'python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
+	add 'python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile ' ~/.bash_login'
 
 	with graphical terminal emulator
-	add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
+	add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile ' ~/.bash_login?'
 	
 
 waitress: sudo pip install waitress
