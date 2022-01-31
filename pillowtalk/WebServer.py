@@ -31,11 +31,11 @@ def settings():
             context["cushion_2_nickname"] = request.form["cushion_2_nickname"]
             context["cushion_1_time"] = request.form["cushion_1_time"]
             context["cushion_2_time"] = request.form["cushion_2_time"]
-            
+
             json.dump(context, f)
-    
+
         return make_response()
-            
+
     '''
     Send stuff here to update settings
     '''
