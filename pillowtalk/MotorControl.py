@@ -1,4 +1,4 @@
-from time import sleep
+        from time import sleep
 import itertools
 import smbus
 
