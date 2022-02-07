@@ -139,16 +139,13 @@ class MotorControl:
             print("On Loop {}".format(i))
             if self.motorRun2(inflateTime, 1, 3) == -2:
                 break
-            for j in range(waitTime):
-                sleep(1)
-                print("wait {}".format(j))
+
+            sleep(waitTime)
 
             if self.motorRun2(deflateTime, 2, 4) == -2:
                 break
             if i < loopNumber-1:
-                for j in range(waitTime):
-                    sleep(1)
-                    print("wait {}".format(j))
+                sleep(waitTime)
 
     # convert seconds given into hour,minute,sec
     def timeFormat(self, seconds):
