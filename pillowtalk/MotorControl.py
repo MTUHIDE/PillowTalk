@@ -25,56 +25,54 @@ class MotorControl:
         self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 
     def motor1On(self, time):
-        return self.motorRun(time, 1)
+        self.motorRun(time, 1)
 
     def motor2On(self, time):
-        return self.motorRun(time, 2)
+        self.motorRun(time, 2)
 
     def motor3On(self, time):
-        return self.motorRun(time, 3)
-    
+        self.motorRun(time, 3)
+
     def motor4On(self, time):
-        return self.motorRun(time, 4)
+        self.motorRun(time, 4)
 
     def motor1Off(self, time):
         self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
 
     def motor2Off(self, time):
         self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
-    
+
     def motor3Off(self, time):
         self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
-    
+
     def motor4Off(self, time):
         self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 
     def inflateAll(self, time):
-        return self.motorRun2(time, 1, 3)
+        self.motorRun2(time, 1, 3)
 
     def deflateAll(self, time):
-        return self.motorRun2(time, 2, 4)
-    
-    def wait(self, time, motor, motor2 = None):
+        self.motorRun2(time, 2, 4)
+
+    def wait(self, time, motor, motor2=None):
         for x in range(time):
             if motor2 != None:
                 print("motor {} and motor {} on {} second".format(motor, motor2, x))
                 if self._bus.read_byte_data(self._DEVICE_ADDR, motor) == 0 or self._bus.read_byte_data(self._DEVICE_ADDR, motor2) == 0:
-                    return -2
+                    raise MotorStoppedEarlyError("Motor Stopped Early Error")
             else:
                 print("motor {} on {} second".format(motor, x))
                 if self._bus.read_byte_data(self._DEVICE_ADDR, motor) == 0:
-                    return -2
+                    raise MotorStoppedEarlyError("Motor Stopped Early Error")
             sleep(1)
 
-    def checkDomain(self, motor, motor2 = None):
+    def checkDomain(self, motor, motor2=None):
         if motor < 1 or motor > 4:
-            return -1
+            raise InternalMotorError("Internal Motor Error")
         if motor2 != None:
             if ((motor == 1 and motor2 == 2) or (motor == 3 and motor2 == 4) or (motor2 == 2 and motor == 1) or (motor2 == 4 and motor2 == 3)) and (motor2 < 1 or motor2 > 4):
-                return -1
+                raise InternalMotorError("Internal Motor Error")
 
-        return 0
-    
     # return -1 error in motor
     # return -2 Motor stopped early
     # Run the specified motor for a specified amount of time
@@ -94,7 +92,7 @@ class MotorControl:
         if motor == 4:
             self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
             self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0xFF)
-        
+
         self.wait(time, motor)
 
         if motor == 1 or motor == 2:
@@ -104,13 +102,12 @@ class MotorControl:
             self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
             self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 
-        print ("motor Finished")
-        return 0
-        
-    #return -1 error in motor
-    #return -2 Motor Stopped early
+        print("motor Finished")
+
+    # return -1 error in motor
+    # return -2 Motor Stopped early
     def motorRun2(self, time, motor, motor2):
-        self.checkDomain(motor, motor2)    
+        self.checkDomain(motor, motor2)
 
         # Assuming pillow 1 is left and Pillow 2 is right
         if motor == 1 or motor2 == 1:
@@ -125,35 +122,33 @@ class MotorControl:
         if motor == 4 or motor2 == 4:
             self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
             self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0xFF)
-                
+
         self.wait(time, motor, motor2)
 
         self.stopAll()
 
-        print ("motor Finished")
-        return 0
+        print("Motor Finished")
 
     # cycle everything based on given number of loops
     def cycleLoop(self, inflateTime, deflateTime, waitTime, loopNumber):
-                totalTime = inflateTime + deflateTime + (waitTime*2-waitTime)
-                totalLoopTime = totalTime*loopNumber
-                print ("Starting cycle with estimated cycle total time of {}".format(self.timeFormat(totalLoopTime)))
-                for i in range(loopNumber):
-                        print("On Loop {}".format(i))
-                        if self.motorRun2(inflateTime, 1, 3) == -2:
-                                break
-                        for j in range(waitTime):
-                                sleep(1)
-                                print("wait {}".format(j))
+        totalTime = inflateTime + deflateTime + (waitTime*2-waitTime)
+        totalLoopTime = totalTime*loopNumber
+        print("Starting cycle with estimated cycle total time of {}".format(
+            self.timeFormat(totalLoopTime)))
+        for i in range(loopNumber):
+            print("On Loop {}".format(i))
+            if self.motorRun2(inflateTime, 1, 3) == -2:
+                break
+            for j in range(waitTime):
+                sleep(1)
+                print("wait {}".format(j))
 
-                        if self.motorRun2(deflateTime, 2, 4) == -2:
-                                break
-                        if i < loopNumber-1:
-                                for j in range(waitTime):
-                                        sleep(1)
-                                        print("wait {}".format(j))
-
-                return "Cycle Complete"
+            if self.motorRun2(deflateTime, 2, 4) == -2:
+                break
+            if i < loopNumber-1:
+                for j in range(waitTime):
+                    sleep(1)
+                    print("wait {}".format(j))
 
     # convert seconds given into hour,minute,sec
     def timeFormat(self, seconds):
@@ -165,10 +160,10 @@ class MotorControl:
         return "%d:%02d:%02d" % (hour, minutes, seconds)
 
 
-# TODO: replace the "magic numbers" with these exceptions
 class InternalMotorError(Exception):
     def __init__(self, message):
         super().__init__(message)
+
 
 class MotorStoppedEarlyError(Exception):
     def __init__(self, message):
