@@ -3,11 +3,11 @@ import os
 
 import MotorControl
 import TextParser
-import RelayControl
 import _thread
 
 power_on = True
 
+# TODO: Update for new MotorControl functions
 def run_server():
     text_parser = TextParser.TextParser()
     motor_control = MotorControl.MotorControl()
