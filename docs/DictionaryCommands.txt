@@ -63,5 +63,7 @@ sixty
 60
 
 TimeUnits:
+second
 seconds
+minute
 minutes
