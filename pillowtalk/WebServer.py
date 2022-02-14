@@ -3,6 +3,8 @@ from waitress import serve
 
 from threading import Thread
 
+from MotorControl import *
+
 from time import sleep
 
 import json
@@ -13,7 +15,7 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     '''
-    <Insert a really descriptive comment here>
+    Load webpage for user control
     '''
     context = None
     with open("settings.json", "r") as f:
@@ -24,9 +26,13 @@ def index():
 
 @app.route("/settings", methods=["POST"])
 def settings():
+    '''
+    Send stuff here to update settings
+    '''
+
     if request.method == 'POST':
-        with open("settings.json", "r+") as f:
-            context = json.load(f)
+        with open("settings.json", "w") as f:
+            context = {}
             context["cushion_1_nickname"] = request.form["cushion_1_nickname"]
             context["cushion_2_nickname"] = request.form["cushion_2_nickname"]
             context["cushion_1_time"] = request.form["cushion_1_time"]
@@ -36,28 +42,48 @@ def settings():
 
         return make_response()
 
-    '''
-    Send stuff here to update settings
-    '''
-    pass
 
-
-@app.route("/motorcontrol")
+@app.route("/motorcontrol", methods=["POST"])
 def motorcontrol():
     '''
-    Send stuff here to control motors
-    TODO: Figure out what input this should accept
+    Accepts a POST request and controls motors
+    TODO: Describe this better
+
+    Request should look like the following:
+    {
+        "motors" : [
+            {"motor": 1, "time": 30},
+            {"motor": 2, "time": 20}
+        ]
+    }
     '''
-    pass
+    mc = MotorControl()
+    body = {}
+    if request.method == "POST":
+        body = request.get_json()
+
+        # TODO: Connect this to the motor controller
+
+        return body
 
 
 @app.route("/parse")
 def textparsing():
     '''
-    Send text here to get parsed
-    TODO: Figure out what input this should accept
+    Accepts a POST request and sends data to the text parser
+    TODO: Describe this better
+
+    Request should look like the following:
+    {
+        "text": "this is some text that I'd like to parse"
+    }
     '''
-    pass
+
+    body = {}
+    if request.method == "POST":
+        body = request.get_json()
+        # TODO: Connect this to text parser
+        return body
 
 
 @app.route("/healthcheck")
@@ -70,7 +96,9 @@ def healthcheck():
 
 @app.route("/threadtest")
 def threadtest():
-
+    '''
+    Test endpoint to demonstrate creating a thread, sleeping, and then exiting while allowing Flask to respond quickly
+    '''
     class TestThread(Thread):
         def __init__(self):
             super().__init__()

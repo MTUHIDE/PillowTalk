@@ -46,13 +46,12 @@ class TextParser:
                 print("found keyword '{0}' at index {1} in string '{2}'".format( keyword, index, string))
             except ValueError as e:
                 # self.saveString("Keyword:'{0}' not found in '{1}'".format(keyword, string)
-                print("Index does not exist")
-                return -1
+                raise KeywordNotFoundError(f"Invalid keyword: index {index} does not exist")
         else:
             command = words
 
         if len(command) < 3:
-            return -2
+            raise InsufficientCommandLengthError(f"Command '{command}' Not Long Enough")
         return command
 
     # return -1 invalid number
@@ -74,15 +73,43 @@ class TextParser:
             elif pillow == "right" or pillow =="write" or pillow == "cushion_2":
                 relay = 3
             else:
-                return -3
+                raise NonexistentPillowError(f"Pillow {pillow} does not exist")
         elif action == "deflate":
             if pillow == "left" or pillow == "cushion_1":
                 relay = 2
             elif pillow == "right" or pillow =="write" or pillow == "cushion_2":
                 relay = 4
             else:
-                return -3
+                raise NonexistentPillowError(f"Pillow {pillow} does not exist")
         else:
-            return -2
+            raise InvalidActionError(f"Action '{action}' is invalid")
 
         return [relay, time]
+
+    
+    # return -2 command not long enough - not enough arguments provided for a command
+    # return -1 keyword not found
+    # return -2 invalid action - the function the pillow needs to take to inflate or deflate
+    # return -3 invalid inflatable - does a pillow not exist?
+
+class InsufficientCommandLengthError(Exception):
+    '''Catch the lack of required arguments for a command'''
+    def __init__(self, message):
+        super().__init__(message)
+
+    
+class KeywordNotFoundError(Exception):
+    '''Catch a keyword that does not exist'''
+    def __init__(self, message):
+        super().__init__(message)
+
+    
+class InvalidActionError(Exception):
+    '''Catch an invalid function the pillow needs to inflate or deflate'''
+    def __init__(self, message):
+        super().__init__(message)
+
+class NonexistentPillowError(Exception):
+    '''Catch a pillow that does not exist'''
+    def __init__(self, message):
+        super().__init__(message)
