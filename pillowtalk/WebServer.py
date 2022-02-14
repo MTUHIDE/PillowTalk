@@ -3,16 +3,19 @@ from waitress import serve
 
 from threading import Thread
 
+from MotorControl import *
+
 from time import sleep
 
 import json
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
     '''
-    <Insert a really descriptive comment here>
+    Load webpage for user control
     '''
     context = None
     with open("settings.json", "r") as f:
@@ -45,7 +48,7 @@ def motorcontrol():
     '''
     Accepts a POST request and controls motors
     TODO: Describe this better
-    
+
     Request should look like the following:
     {
         "motors" : [
@@ -54,18 +57,22 @@ def motorcontrol():
         ]
     }
     '''
+    mc = MotorControl()
     body = {}
     if request.method == "POST":
         body = request.get_json()
+
         # TODO: Connect this to the motor controller
+
         return body
+
 
 @app.route("/parse")
 def textparsing():
     '''
     Accepts a POST request and sends data to the text parser
     TODO: Describe this better
-    
+
     Request should look like the following:
     {
         "text": "this is some text that I'd like to parse"
@@ -105,6 +112,7 @@ def threadtest():
     temp.start()
 
     return make_response()
+
 
 # Start the app on localhost:3000
 app.run("0.0.0.0", 3000)
