@@ -32,12 +32,6 @@ PillowCheckAll:
 all
 both
 
-Pillow Extra:
-Cushion
-Pillow
-Pillows
-Cushions
-
 TimeAmount:
 one
 two
