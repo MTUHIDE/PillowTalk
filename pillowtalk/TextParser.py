@@ -1,36 +1,20 @@
 import datetime
+from MotorControl import *
 
 class TextParser:
-    def saveString(self, string):
-        counter = 0
-        f = None
-        try:
-            f = open("commandDB", "r")
-        except IOError:
-            pass
-        else:
-            for line in f:
-                pass
-            if line != None:
-                firstWord = line.split(":", 1)[0]
-                if firstWord.isdigit():
-                    counter = int(firstWord)
-            f.close()
-        try:
-            f = open("commandDB", "a")
-        except IOError:
-            print("cannot open commandDB. Major Issue")
-        else:
-            counter = counter + 1
-            f.write("{0}: '{1}' {2}\n".format(counter, string, datetime.datetime.now()))
-            f.close()
+    def __init__(self):
+        self._dictionary = self.openDictionary()
+        if self._dictionary == -1:
+            self._dictionary = None
+            print("dictionary was not pulled")
+        self._MC = MotorControl()
 
     # return -1 Error opening file
     def openDictionary(self):
         f = None
         keys = {}
         try:
-            f = open("PillowCommands.txt", "r")
+            f = open("DictionaryCommands.txt", "r")
         except IOError:
             return -1
         else:
@@ -79,11 +63,7 @@ class TextParser:
         relay = None
         action = command[0]
         pillow = command[1]
-        time = None
-        try:
-            time = int(command[2])
-        except ValueError as e:
-            return -1
+        time = int(command[2])
 
         if len(command) == 4:
             if command[3] == "minute":
