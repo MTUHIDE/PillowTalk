@@ -16,17 +16,13 @@ PillowCheck1:
 Left 
 A
 First
-one 
-1
-1st
+
 
 PillowCheck2:
 Right
 B
 Second
-two
-2
-2nd
+
 
 PillowCheckAll:
 all
