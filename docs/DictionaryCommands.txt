@@ -7,23 +7,19 @@ Google
 Functions:
 Inflate
 Deflate
+
+FunctionOff:
 Stop all
 Stop
 quit
 exit
 off
 
-PillowCheck1:
+Pillow:
 Left 
 A
-
-
-PillowCheck2:
 Right
 B
-
-
-PillowCheckAll:
 all
 both
 
