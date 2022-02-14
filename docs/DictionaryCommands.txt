@@ -15,13 +15,11 @@ off
 PillowCheck1:
 Left 
 A
-First
 
 
 PillowCheck2:
 Right
 B
-Second
 
 
 PillowCheckAll:
