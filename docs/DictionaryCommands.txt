@@ -7,6 +7,7 @@ Google
 Functions:
 Inflate
 Deflate
+Stop all
 Stop
 quit
 exit
