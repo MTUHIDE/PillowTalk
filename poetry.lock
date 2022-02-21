@@ -79,7 +79,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "playsound"
-version = "^1.2.2"
+version = "1.2.2"
 description = "Pure Python, cross platform, single function module with no dependencies for playing sounds."
 category = "main"
 optional = false
@@ -127,7 +127,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "a50d061491ff493a1178709033417458819ab022429e1ab7170cc6f8f1a7f3db"
+content-hash = "abc4d4f7c442fb56ce45d6e8d2b3c989274d07cd80f12a63c16902b896018a39"
 
 [metadata.files]
 autopep8 = [
