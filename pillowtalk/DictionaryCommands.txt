@@ -7,36 +7,26 @@ Google
 Functions:
 Inflate
 Deflate
+Fill
+Empty
+
+FunctionOff:
 Stop
 quit
 exit
 off
 
-PillowCheck1:
+Pillow1:
 Left 
 A
-First
-one 
-1
-1st
 
-PillowCheck2:
+Pillow2:
 Right
 B
-Second
-two
-2
-2nd
 
-PillowCheckAll:
+PillowAll:
 all
 both
-
-Pillow Extra:
-Cushion
-Pillow
-Pillows
-Cushions
 
 TimeAmount:
 one
