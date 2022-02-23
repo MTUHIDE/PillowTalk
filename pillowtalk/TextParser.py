@@ -68,7 +68,8 @@ class TextParser:
         motor1 = None
         motor2 = None
         action = None
-        #get correct action
+        time = None
+
         values = self.getDictValues("FunctionOff")
         for value in values:
             try:
@@ -77,6 +78,7 @@ class TextParser:
                 return 0
             except ValueError:
                 continue
+
         values = self.getDictValues("Functions")
         for i, value in enumerate(values):
             try:
@@ -94,13 +96,62 @@ class TextParser:
                 motor1 = 2
                 motor2 = 4
 
-        values = self.getDictValues("Pillow")
+        leftIndex = None
+        rightIndex = None
+        bothIndex = None
+
+        values = self.getDictValues("Pillow1")
         for i, value in enumerate(values):
             try:
-                index = commands.index(value)
+                leftIndex = commands.index(value)
+            except:
+                continue
+
+        values = self.getDictValues("Pillow2")
+        for i, value in enumerate(values):
+            try:
+                rightIndex = commands.index(value)
+            except:
+                continue
+
+        values = self.getDictValues("PillowAll")
+        for i, value in enumerate(values):
+            try:
+                bothIndex = commands.index(value)
+            except:
+                continue
+
+        if not bothIndex and not leftIndex and not rightIndex:
+            raise InvalidActionError("Pillow assignment unknown")
+
+        if bothIndex < leftIndex and bothIndex < rightIndex:
+            continue
+        elif leftIndex < rightIndex:
+            motor2 = None
+        else:
+            motor1 = motor2
+            motor2 = None
+
+        values = self.getDictValues("TimeAmount")
+        for i, value in enumerate(values):
+            try:
+                commands.index(value)
+# fix to set correct number
+                Time = value
             except:
                 if i == len(values)-1:
                     raise InvalidActionError("Keyword Not Found")
+                continue
+
+        values = self.getDictValues("TimeUnits")
+        for i, value in enumerate(values):
+            try:
+                commands.index(value)
+                if i == 1:
+                    time = time * 60
+            except:
+                if i == len(values)-1:
+                    raise InvalidActionError("Unit of Time Not Found")
                 continue
         #time
         #units
@@ -132,3 +183,37 @@ class NonexistentPillowError(Exception):
 
     def __init__(self, message):
         super().__init__(message)
+
+
+
+
+
+def text2int(textnum, numwords={}):
+    if not numwords:
+      units = [
+        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+        "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+        "sixteen", "seventeen", "eighteen", "nineteen",
+      ]
+
+      tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+      scales = ["hundred", "thousand", "million", "billion", "trillion"]
+
+      numwords["and"] = (1, 0)
+      for idx, word in enumerate(units):    numwords[word] = (1, idx)
+      for idx, word in enumerate(tens):     numwords[word] = (1, idx * 10)
+      for idx, word in enumerate(scales):   numwords[word] = (10 ** (idx * 3 or 2), 0)
+
+    current = result = 0
+    for word in textnum.split():
+        if word not in numwords:
+          raise Exception("Illegal word: " + word)
+
+        scale, increment = numwords[word]
+        current = current * scale + increment
+        if scale > 100:
+            result += current
+            current = 0
+
+    return result + current
