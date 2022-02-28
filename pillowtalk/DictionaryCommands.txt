@@ -1,27 +1,25 @@
 Wakewords:
-PillowTalk
-Alexa
-Echo
-Google
+pillow
+alexa
+echo
+google
 
 Functions:
-Inflate
-Deflate
-Fill
-Empty
+inflate
+deflate
 
 FunctionOff:
-Stop
+stop
 quit
 exit
 off
 
 Pillow1:
-Left 
+left
 A
 
 Pillow2:
-Right
+right
 B
 
 PillowAll:
@@ -29,23 +27,6 @@ all
 both
 
 TimeAmount:
-one
-two
-three
-four
-five
-six
-seven
-eight
-nine
-ten
-fifteen
-twenty
-thirty
-fourty
-fourty-five
-fifty
-sixty
 1
 2
 3
