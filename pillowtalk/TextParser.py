@@ -1,6 +1,8 @@
 import datetime
-from MotorControl import * as MC
-
+try:
+    import MotorControl as MC
+except:
+    pass
 
 class TextParser:
     def __init__(self):
@@ -34,16 +36,14 @@ class TextParser:
             return keys
 
 # Main function to run
-    def runCommands(self, string, keyword=False):
-        commandArray = self.commandSearch(string, keyword)
-        if commandArray == 0:
-            MC.stopAll()
-            print("stopping motors")
-        
-        returnedMotors = returnMotor(commandArray)
+    def runCommands(self, string):
+        string  = string.lower().split()
+        returnedMotors = returnMotor(string)
+        MC
 
     # return 0
     # return command
+    # helper function NOT NEEDED!!
     def commandSearch(self, string):
         words = string.lower().split()
         listOfCommands = None
@@ -74,7 +74,7 @@ class TextParser:
         for value in values:
             try:
                 commands.index(value)
-                MC.stopAll()
+                #MC.stopAll()
                 return 0
             except ValueError:
                 continue
@@ -87,75 +87,88 @@ class TextParser:
                 break
             except ValueError:
                 if i == len(values)-1:
-                    raise InvalidActionError("Keyword Not Found")
+                    raise InvalidActionError("Action not found")
                 continue
-            if action == "inflate":
-                motor1 = 1
-                motor2 = 3
-            else:
-                motor1 = 2
-                motor2 = 4
+        if action == "inflate":
+            motor1 = 1
+            motor2 = 3
+        else:
+            motor1 = 2
+            motor2 = 4
 
         leftIndex = None
         rightIndex = None
         bothIndex = None
 
         values = self.getDictValues("Pillow1")
-        for i, value in enumerate(values):
+        for value in values:
             try:
                 leftIndex = commands.index(value)
+                break
             except:
                 continue
 
         values = self.getDictValues("Pillow2")
-        for i, value in enumerate(values):
+        for value in values:
             try:
                 rightIndex = commands.index(value)
+                break
             except:
                 continue
 
         values = self.getDictValues("PillowAll")
-        for i, value in enumerate(values):
+        for value in values:
             try:
                 bothIndex = commands.index(value)
+                break
             except:
                 continue
 
         if not bothIndex and not leftIndex and not rightIndex:
             raise InvalidActionError("Pillow assignment unknown")
 
+        if bothIndex is None:
+            bothIndex = 100000
+        
+        if leftIndex is None:
+            leftIndex = 100000
+
+        if rightIndex is None:
+            rightIndex = 100000
+
         if bothIndex < leftIndex and bothIndex < rightIndex:
-            continue
+            pass
         elif leftIndex < rightIndex:
             motor2 = None
         else:
             motor1 = motor2
             motor2 = None
 
+        #get the amount of time
         values = self.getDictValues("TimeAmount")
         for i, value in enumerate(values):
             try:
                 commands.index(value)
-# fix to set correct number
-                Time = value
+                time = int(value)
+                break
             except:
                 if i == len(values)-1:
-                    raise InvalidActionError("Keyword Not Found")
+                    raise InvalidActionError("Time not found")
                 continue
 
+        #get the units of time
         values = self.getDictValues("TimeUnits")
         for i, value in enumerate(values):
             try:
                 commands.index(value)
                 if i == 1:
                     time = time * 60
+                break
             except:
                 if i == len(values)-1:
                     raise InvalidActionError("Unit of Time Not Found")
                 continue
-        #time
-        #units
-        return [motor1, motor2, time]
+        return (motor1, motor2, time)
 
 class InsufficientCommandLengthError(Exception):
     '''Catch the lack of required arguments for a command'''
