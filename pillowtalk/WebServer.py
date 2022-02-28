@@ -3,14 +3,13 @@ from waitress import serve
 
 from threading import Thread
 
-from MotorControl import *
+# from MotorControl import *
 
 from time import sleep
 
 import json
 
 app = Flask(__name__)
-
 
 @app.route("/")
 def index():
@@ -106,7 +105,7 @@ def threadtest():
         def run(self):
             print("Starting")
             sleep(5)
-            print("Done")
+            print(f"Done)")
 
     temp = TestThread()
     temp.start()
