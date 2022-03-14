@@ -100,7 +100,7 @@ def textparsing():
             body = request.get_json()
             tp.runCommands(body["text"])
         except Exception as e:
-            return e, 400
+            print(e)
 
     return "Success", 200
 
