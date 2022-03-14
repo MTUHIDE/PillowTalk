@@ -65,11 +65,14 @@ def motorcontrol():
                 currTime: int = command["time"]
                 # Check if motor n is even and make sure n - 1 has not been used yet
                 # Also do the same for odd numbers and n + 1
-                if not ((currMotor % 2 == 0 and currMotor - 1 in seen) or (currMotor % 2 == 1 and currMotor + 1 in seen)):
+                if (not ((currMotor % 2 == 0 and currMotor - 1 in seen) or (currMotor % 2 == 1 and currMotor + 1 in seen))) and currMotor not in seen:
                     try:
+                        print(f"Running motor {currMotor} for {currTime}")
+                        seen.add(currMotor)
                         runMotor(currMotor, currTime)
-                    finally:
-                        pass
+                    except:
+                        print(f"Skipping motor {currMotor}")
+                        
         except Exception as e:
             return e, 400
 
