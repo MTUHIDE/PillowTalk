@@ -39,7 +39,14 @@ class TextParser:
     def runCommands(self, string):
         string  = string.lower().split()
         returnedMotors = returnMotor(string)
-        MC
+        try:
+            if returnedMotors[2] == None:
+                MC.motorRun(returnedMotors[0], returnedMotors[1])
+            else:
+                MC.motorRun2(returnedMotors[0], returnedMotors[1], returnedMotors[2])
+        except:
+            print("error in motors\n")
+
 
     # return 0
     # return command
