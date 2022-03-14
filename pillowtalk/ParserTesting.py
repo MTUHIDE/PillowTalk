@@ -4,10 +4,6 @@ from TextParser import *
 TP = TextParser()
 class ParserTesting(unittest.TestCase):
 
-    def test_true(self):
-        self.assertTrue(True)
-
-    #returnMotors
     def test_allstop(self):
         string = "ksjbdvksjdv exit ksbksbd skjdskjd skjdhs"
         string = string.lower().split()
