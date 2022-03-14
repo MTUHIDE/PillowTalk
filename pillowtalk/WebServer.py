@@ -1,12 +1,15 @@
 from flask import Flask, make_response, render_template, request
 import json
 from MotorControl import *
+from TextParser import TextParser
 from threading import Thread
 from time import sleep
 from waitress import serve
 
 
 app = Flask(__name__)
+
+tp = TextParser()
 
 
 @app.route("/")
@@ -72,14 +75,14 @@ def motorcontrol():
                         runMotor(currMotor, currTime)
                     except:
                         print(f"Skipping motor {currMotor}")
-                        
+
         except Exception as e:
             return e, 400
 
         return "Success", 200
 
 
-@app.route("/parse")
+@app.route("/parse", methods=["POST"])
 def textparsing():
     '''
     Accepts a POST request and sends data to the text parser
@@ -93,9 +96,13 @@ def textparsing():
 
     body = {}
     if request.method == "POST":
-        body = request.get_json()
-        # TODO: Connect this to text parser
-        return body
+        try:
+            body = request.get_json()
+            tp.runCommands(body["text"])
+        except Exception as e:
+            return e, 400
+
+    return "Success", 200
 
 
 @app.route("/healthcheck")
