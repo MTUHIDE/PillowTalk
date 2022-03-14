@@ -1,15 +1,13 @@
 from flask import Flask, make_response, render_template, request
+import json
+from MotorControl import *
+from threading import Thread
+from time import sleep
 from waitress import serve
 
-from threading import Thread
-
-# from MotorControl import *
-
-from time import sleep
-
-import json
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
@@ -56,14 +54,26 @@ def motorcontrol():
         ]
     }
     '''
-    mc = MotorControl()
+
     body = {}
     if request.method == "POST":
         body = request.get_json()
+        seen = set()
+        try:
+            for command in body["motors"]:
+                currMotor: int = command["motor"]
+                currTime: int = command["time"]
+                # Check if motor n is even and make sure n - 1 has not been used yet
+                # Also do the same for odd numbers and n + 1
+                if not ((currMotor % 2 == 0 and currMotor - 1 in seen) or (currMotor % 2 == 1 and currMotor + 1 in seen)):
+                    try:
+                        runMotor(currMotor, currTime)
+                    finally:
+                        pass
+        except Exception as e:
+            return e, 400
 
-        # TODO: Connect this to the motor controller
-
-        return body
+        return "Success", 200
 
 
 @app.route("/parse")

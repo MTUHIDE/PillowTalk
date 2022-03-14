@@ -35,10 +35,6 @@ class MotorThread(Thread):
         self.running = True
 
     def run(self):
-        '''
-        TODO: Add a very descriptive comment
-        '''
-
         global bus
 
         print(f"Motor {self.motor} starting")
@@ -140,7 +136,7 @@ def checkDomain(motor, motor2=None):
 
 def runMotor(motor: int, time: int) -> None:
     '''
-    Run a motor for a specified period of time (in seconds)
+    Spawn a new thread to run a motor for a specified amount of time
     '''
 
     checkDomain(motor)
