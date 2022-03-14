@@ -3,7 +3,7 @@ import speech_recognition as sr
 from datetime import date
 from time import sleep
 from TextParser import *
-from relayControl import *
+from RelayControl import *
 from MotorControl import *
 
 class Speech2Text:

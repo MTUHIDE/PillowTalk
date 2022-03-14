@@ -1,18 +1,19 @@
 # PillowTalk
-#
-# Worked on by:
-#	Isaac Long
-#	Ian Lawrie
-#	Javen Zamojcin
-#       Jacob Allen
-#       Patrick Janssen
-# Advisor:
-#	Keith Vertanen
-#
+## Worked on by:
+- Isaac Long
+- Ian Lawrie
+- Javen Zamojcin
+- Jacob Allen
+- Patrick Janssen
+- Michelle Perini
+- Josh Overbeek
+- Thawng Hmung
+- Mark Washington
+
+## Advisor: Keith Vertanen
 
 Not Included Downloads:
-STT Engine
-
+- STT Engine
 
 The software requires the hardware of a raspberry pi 3 or 4.
 
@@ -21,16 +22,21 @@ If you do not know how to setup a raspberry pi please follow this tutorial:
 https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
 
 Make sure that the pi is updated and upgraded by using (This will take some time):
-
+```
 sudo apt update
 sudo apt full-upgrade
+```
 
-Installations:
+## New Installation Steps (WIP)
+1. Follow the steps at [this link](https://python-poetry.org/docs/#installation) to install the Poetry package manager.
+2. Within the project folder run `poetry install`
 
-Flask: sudo pip install -U Flask 
+## Old Installation Steps:
+
+Flask: `sudo pip install -U Flask`
 	also found here: https://pypi.org/project/Flask/
 	
-sphinx: sudo pip install -U sphinx
+sphinx: `sudo pip install -U sphinx`
 	also found here: https://www.sphinx-doc.org/en/master/usage/installation.html
 	
 pybluez: https://github.com/pybluez/pybluez in README
@@ -84,10 +90,10 @@ bluetooth permissions:
 run bluethooth_service.py on user login:
 
 	without graphical terminal emulator
-	add 'python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
+	add 'python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile ' ~/.bash_login'
 
 	with graphical terminal emulator
-	add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile '~/.profile'
+	add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile ' ~/.bash_login?'
 	
 
 waitress: sudo pip install waitress
