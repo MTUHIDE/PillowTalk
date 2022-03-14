@@ -141,6 +141,8 @@ def runMotor(motor: int, time: int) -> None:
 
     checkDomain(motor)
 
+    print(f"Creating thread for motor {motor}")
+
     runMotorLock.acquire()
 
     if motor in motorThreads:
@@ -148,6 +150,7 @@ def runMotor(motor: int, time: int) -> None:
         motorThreads[motor].join()
 
     motorThreads[motor] = MotorThread(motor, time)
+    motorThreads[motor].start()
 
     runMotorLock.release()
 
