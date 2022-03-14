@@ -41,15 +41,16 @@ class MotorThread(Thread):
         print(f"Started thread for motor {self.motor}, turning off motor {self.offMotor}")
 
         bus.write_byte_data(DEVICE_ADDR, self.motor, 0xFF)
-        bus.write_byte_data(DEVICE_ADDR, self.offMotors, 0x00)
+        bus.write_byte_data(DEVICE_ADDR, self.offMotor, 0x00)
 
-        print(f"Motor {self.motor} starting")
         while (self.timeout > 0 and self.running):
             if bus.read_byte_data(DEVICE_ADDR, self.motor) == 0:
                 print(f"Motor {self.motor} stopped early for some reason")
                 break
             sleep(0.25)
             self.timeout -= 1
+
+        bus.write_byte_data(DEVICE_ADDR, self.motor, 0x00)
 
     def stop(self):
         '''
