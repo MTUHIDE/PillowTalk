@@ -37,6 +37,12 @@ class MotorThread(Thread):
     def run(self):
         global bus
 
+        self.offMotor = self.motor + 1 if self.motor % 2 == 0 else self.motor - 1
+        print(f"Started thread for motor {self.motor}, turning off motor {self.offMotor}")
+
+        bus.write_byte_data(DEVICE_ADDR, self.motor, 0xFF)
+        bus.write_byte_data(DEVICE_ADDR, self.offMotors, 0x00)
+
         print(f"Motor {self.motor} starting")
         while (self.timeout > 0 and self.running):
             if bus.read_byte_data(DEVICE_ADDR, self.motor) == 0:
