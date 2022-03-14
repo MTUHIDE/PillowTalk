@@ -98,6 +98,7 @@ def textparsing():
     if request.method == "POST":
         try:
             body = request.get_json()
+            print(body)
             tp.runCommands(body["text"])
         except Exception as e:
             print(e)
