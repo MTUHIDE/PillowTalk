@@ -39,7 +39,7 @@ class TextParser:
     def runCommands(self, string):
         string  = string.lower().split()
         returnedMotors = self.returnMotor(string)
-        print("runCommands")
+
         try:
             if returnedMotors[2] == None:
                 MC.motorRun(returnedMotors[0], returnedMotors[1])
@@ -177,6 +177,8 @@ class TextParser:
                 if i == len(values)-1:
                     raise InvalidActionError("Unit of Time Not Found")
                 continue
+
+        print("end returnMotor()")
         return (motor1, motor2, time)
 
 class InsufficientCommandLengthError(Exception):
