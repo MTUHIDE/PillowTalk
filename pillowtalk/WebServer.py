@@ -102,7 +102,7 @@ def textparsing():
             print(body["text"])
             tp.runCommands(body["text"])
         except Exception as e:
-            traceback.print_exc(e)
+            print(e)
 
     return "Success", 200
 
