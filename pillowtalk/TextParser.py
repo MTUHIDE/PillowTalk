@@ -143,6 +143,8 @@ class TextParser:
         if rightIndex is None:
             rightIndex = 100000
 
+        print(f"bothIndex: {bothIndex}, leftIndex: {leftIndex}, rightIndex: {rightIndex}")
+
         if bothIndex < leftIndex and bothIndex < rightIndex:
             pass
         elif leftIndex < rightIndex:
