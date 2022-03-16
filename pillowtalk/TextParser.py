@@ -41,8 +41,8 @@ class TextParser:
         returnedMotors = self.returnMotor(string)
         print(returnedMotors)
 
-        if returnedMotors[2] == None:
-            MC.motorRun(returnedMotors[0], returnedMotors[1])
+        if returnedMotors[1] == None:
+            MC.motorRun(returnedMotors[0], returnedMotors[2])
         else:
             MC.motorRun2(returnedMotors[0], returnedMotors[1], returnedMotors[2])
     
