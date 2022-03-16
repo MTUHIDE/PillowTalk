@@ -39,6 +39,7 @@ class TextParser:
     def runCommands(self, string):
         string  = string.lower().split()
         returnedMotors = self.returnMotor(string)
+        print(returnedMotors)
 
         if returnedMotors[2] == None:
             MC.motorRun(returnedMotors[0], returnedMotors[1])
