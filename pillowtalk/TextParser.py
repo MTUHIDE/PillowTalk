@@ -71,7 +71,6 @@ class TextParser:
     # bus 1 inflate pillow 1, bus 2 deflate pillow 1, bus 3 inflate pillow 2, bus 4 deflate pillow 2
     def returnMotor(self, commands):
         commands = commands[::-1]
-        print(commands)
         motor1 = None
         motor2 = None
         action = None
@@ -143,7 +142,7 @@ class TextParser:
         if rightIndex is None:
             rightIndex = 100000
 
-        print(f"bothIndex: {bothIndex}, leftIndex: {leftIndex}, rightIndex: {rightIndex}")
+        # print(f"bothIndex: {bothIndex}, leftIndex: {leftIndex}, rightIndex: {rightIndex}")
 
         if bothIndex < leftIndex and bothIndex < rightIndex:
             pass
