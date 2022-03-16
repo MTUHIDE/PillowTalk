@@ -40,13 +40,11 @@ class TextParser:
         string  = string.lower().split()
         returnedMotors = self.returnMotor(string)
 
-        try:
-            if returnedMotors[2] == None:
-                MC.motorRun(returnedMotors[0], returnedMotors[1])
-            else:
-                MC.motorRun2(returnedMotors[0], returnedMotors[1], returnedMotors[2])
-        except:
-            print("error in motors\n")
+        if returnedMotors[2] == None:
+            MC.motorRun(returnedMotors[0], returnedMotors[1])
+        else:
+            MC.motorRun2(returnedMotors[0], returnedMotors[1], returnedMotors[2])
+    
 
 
     # return 0
