@@ -3,8 +3,6 @@ import speech_recognition as sr
 from datetime import date
 from time import sleep
 from TextParser import *
-#from RelayControl import *
-from MotorControl import *
 import requests
 
 class Speech2Text:
@@ -12,7 +10,6 @@ class Speech2Text:
 
     print("hello")
     def listen(self):
-        motor = MotorControl()
         r = sr.Recognizer()
         mic = sr.Microphone()
         text = TextParser()
@@ -24,7 +21,7 @@ class Speech2Text:
         try:
             words = r.recognize_google(audio)
             print (words)
-            #requests.post("localhost:3000/parse",json={"text": words})
+            requests.post("http://localhost:3000/parse",json={"text": words})
 
         except:
             print("Failed to understand")
