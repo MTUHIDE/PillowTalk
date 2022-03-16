@@ -5,6 +5,7 @@ from TextParser import TextParser
 from threading import Thread
 from time import sleep
 from waitress import serve
+import traceback
 
 
 app = Flask(__name__)
@@ -101,7 +102,7 @@ def textparsing():
             print(body["text"])
             tp.runCommands(body["text"])
         except Exception as e:
-            print(e)
+            traceback.print_exc(e)
 
     return "Success", 200
 
