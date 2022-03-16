@@ -72,9 +72,8 @@ class TextParser:
 
     # bus 1 inflate pillow 1, bus 2 deflate pillow 1, bus 3 inflate pillow 2, bus 4 deflate pillow 2
     def returnMotor(self, commands):
-        print("returnMotor")
-        
         commands = commands[::-1]
+        print(commands)
         motor1 = None
         motor2 = None
         action = None
