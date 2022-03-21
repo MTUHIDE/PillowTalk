@@ -57,31 +57,37 @@ def motorcontrol():
             {"motor": 2, "time": 20}
         ]
     }
+
+    If the value of the 'motors' key is an empty array, all motors will be stopped.
     '''
 
     body = {}
     if request.method == "POST":
         body = request.get_json()
         seen = set()
+
         try:
-            for command in body["motors"]:
-                currMotor: int = command["motor"]
-                currTime: int = command["time"]
-                # Check if motor n is even and make sure n - 1 has not been used yet
-                # Also do the same for odd numbers and n + 1
-                if (not ((currMotor % 2 == 0 and currMotor - 1 in seen) or (currMotor % 2 == 1 and currMotor + 1 in seen))) and currMotor not in seen:
-                    try:
-                        print(f"Running motor {currMotor} for {currTime}")
-                        seen.add(currMotor)
-                        runMotor(currMotor, currTime)
-                    except:
-                        print(f"Skipping motor {currMotor}")
+            if len(body["motors"]) == 0:
+                print("Stopping all motors")
+                stopAll()
+            else:
+                for command in body["motors"]:
+                    currMotor: int = command["motor"]
+                    currTime: int = command["time"]
+                    # Check if motor n is even and make sure n - 1 has not been used yet
+                    # Also do the same for odd numbers and n + 1
+                    if (not ((currMotor % 2 == 0 and currMotor - 1 in seen) or (currMotor % 2 == 1 and currMotor + 1 in seen))) and currMotor not in seen:
+                        try:
+                            print(f"Running motor {currMotor} for {currTime}")
+                            seen.add(currMotor)
+                            runMotor(currMotor, currTime)
+                        except:
+                            print(f"Skipping motor {currMotor}")
 
         except Exception as e:
             return e, 400
 
         return "Success", 200
-
 
 @app.route("/parse", methods=["POST"])
 def textparsing():
