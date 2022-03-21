@@ -176,7 +176,7 @@ class TextParser:
                 if i == len(values)-1:
                     raise InvalidActionError("Unit of Time Not Found")
                 continue
-
+        print(f"Time: {time}")
         return (motor1, motor2, time)
 
 class InsufficientCommandLengthError(Exception):
