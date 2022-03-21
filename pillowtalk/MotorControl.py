@@ -5,56 +5,64 @@ import smbus
 """
 ID 1 and 2 are for pillow 1 control, ID 1 for inflating and ID 2 for deflating
 ID 3 and 4 are for pillow 2 control, ID 3 for inflating and ID 4 for Deflating
-0x00 is off
+0x00 is OFF
 0xFF is ON
 """
-
-
 class MotorControl:
-    # Initalize pin placements and set the pins to output
-    # pin 1 inflate pillow 1, pin 2 deflate pillow1, pin 3 inflate pillow 2, pin 4 deflate pillow 2
     def __init__(self):
+        '''
+        Initialize pin placements and set the pins to output.
+        Pin 1 inflates pillow 1, pin 2 deflates pillow 1, pin 3 inflates pillow 2, and pin 4 deflates pillow 2.
+        '''
         self._DEVICE_BUS = 1
         self._DEVICE_ADDR = 0x10
         self._bus = smbus.SMBus(self._DEVICE_BUS)
 
     def stopAll(self):
-        '''Stop all motors'''
+        '''Stop all motors by setting each hexadecimal value to 0x00.'''
         self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
         self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
         self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
         self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 
-
-    # List of predefined functions that control the motors
     def motor1On(self, time):
+        '''Run motor 1 over a given time interval.'''
         self.motorRun(time, 1)
 
     def motor2On(self, time):
+        '''Run motor 2 over a given time interval.'''
         self.motorRun(time, 2)
 
     def motor3On(self, time):
+        '''Run motor 3 over a given time interval.'''
         self.motorRun(time, 3)
 
     def motor4On(self, time):
+        '''Run motor 4 over a given time interval.'''
         self.motorRun(time, 4)
 
-    def motor1Off(self, time):
+    def motor1Off(self):
+        '''Stop motor 1 by setting its hexadecimal value to 0x00.'''
         self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0x00)
 
-    def motor2Off(self, time):
+    def motor2Off(self):
+        '''Stop motor 2 by setting its hexadecimal value to 0x00.'''
         self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
 
-    def motor3Off(self, time):
+    def motor3Off(self):
+        '''Stop motor 3 by setting its hexadecimal value to 0x00.'''
         self._bus.write_byte_data(self._DEVICE_ADDR, 3, 0x00)
 
-    def motor4Off(self, time):
+    def motor4Off(self):
+        '''Stop motor 4 by setting its hexadecimal value to 0x00.'''
         self._bus.write_byte_data(self._DEVICE_ADDR, 4, 0x00)
 
     def inflateAll(self, time):
+        '''Run motors 1 and 3 over a given time interval to inflate both pillows.'''
         self.motorRun2(time, 1, 3)
 
     def deflateAll(self, time):
+        '''Run motors 2 and 4 over a given time interval to deflate both pillows.'''
         self.motorRun2(time, 2, 4)
 
     def wait(self, time, motor, motor2=None):
@@ -81,7 +89,7 @@ class MotorControl:
 
 
     def motorRun(self, time, motor):
-        '''Run the specified motor for a specified amount of time'''
+        '''Run one specified motor for a specified amount of time'''
         try:
             self.checkDomain(motor)
         except:
@@ -117,13 +125,15 @@ class MotorControl:
 
 
     def motorRun2(self, time, motor, motor2):
-        '''Run the specified motors for a specified amount of time'''
+        '''
+        Run two specified motors for a specified amount of time.
+        Assume pillow 1 is the left pillow and pillow 2 is the right pillow.
+        '''
         try:
             self.checkDomain(motor, motor2)
         except:
             return
 
-        # Assuming pillow 1 is left and Pillow 2 is right
         if motor == 1 or motor2 == 1:
             self._bus.write_byte_data(self._DEVICE_ADDR, 1, 0xFF)
             self._bus.write_byte_data(self._DEVICE_ADDR, 2, 0x00)
