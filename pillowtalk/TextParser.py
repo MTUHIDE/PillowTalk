@@ -90,7 +90,7 @@ class TextParser:
         for value in values:
             try:
                 commands.index(value)
-                #MC.stopAll()
+                MC.stopAll()
                 return 0
             except ValueError:
                 continue
