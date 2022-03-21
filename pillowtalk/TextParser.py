@@ -9,7 +9,7 @@ class TextParser:
         self._dictionary = self.openDictionary()
         if self._dictionary == -1:
             self._dictionary = None
-            print("dictionary was not pulled")
+            print("Dictionary was not pulled")
 
     def getDictValues(self, key):
         return self._dictionary[key]
@@ -38,14 +38,14 @@ class TextParser:
 # Main function to run
     def runCommands(self, string):
         string  = string.lower().split()
-        returnedMotors = returnMotor(string)
-        try:
-            if returnedMotors[2] == None:
-                MC.motorRun(returnedMotors[0], returnedMotors[1])
-            else:
-                MC.motorRun2(returnedMotors[0], returnedMotors[1], returnedMotors[2])
-        except:
-            print("error in motors\n")
+        returnedMotors = self.returnMotor(string)
+
+        if returnedMotors[1] == None:
+            MC.runMotor(returnedMotors[0], returnedMotors[2])
+        else:
+            MC.runMotor(returnedMotors[0], returnedMotors[2])
+            MC.runMotor(returnedMotors[1], returnedMotors[2])
+    
 
 
     # return 0
@@ -143,6 +143,8 @@ class TextParser:
         if rightIndex is None:
             rightIndex = 100000
 
+        # print(f"bothIndex: {bothIndex}, leftIndex: {leftIndex}, rightIndex: {rightIndex}")
+
         if bothIndex < leftIndex and bothIndex < rightIndex:
             pass
         elif leftIndex < rightIndex:
@@ -175,6 +177,7 @@ class TextParser:
                 if i == len(values)-1:
                     raise InvalidActionError("Unit of Time Not Found")
                 continue
+        print(f"Time: {time}")
         return (motor1, motor2, time)
 
 class InsufficientCommandLengthError(Exception):
