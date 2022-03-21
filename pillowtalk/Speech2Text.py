@@ -23,8 +23,8 @@ class Speech2Text:
             print (words)
             requests.post("http://localhost:3000/parse",json={"text": words})
 
-        except:
-            print("Failed to understand")
+        except Exception as e:
+            print(e)
     def __init__(self):
         self.listen()
 
