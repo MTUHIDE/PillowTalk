@@ -7,7 +7,7 @@ import smbus
 """
 ID 1 and 2 are for pillow 1 control, ID 1 for inflating and ID 2 for deflating
 ID 3 and 4 are for pillow 2 control, ID 3 for inflating and ID 4 for Deflating
-0x00 is off
+0x00 is OFF
 0xFF is ON
 """
 
@@ -35,8 +35,6 @@ class MotorThread(Thread):
         self.running = True
 
     def run(self):
-        global bus
-
         self.offMotor = self.motor + 1 if self.motor % 2 == 0 else self.motor - 1
         print(f"Started thread for motor {self.motor}, turning off motor {self.offMotor}")
 
@@ -61,10 +59,7 @@ class MotorThread(Thread):
 
 
 def stopAll():
-    """
-    Stop all motors
-    """
-
+    '''Stop all motors by setting each hexadecimal value to 0x00.'''
     bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
     bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
     bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
@@ -72,42 +67,52 @@ def stopAll():
 
 
 def motor1On(time):
+    '''Run motor 1 over a given time interval.'''
     motorRun(time, 1)
 
 
 def motor2On(time):
+    '''Run motor 2 over a given time interval.'''
     motorRun(time, 2)
 
 
 def motor3On(time):
+    '''Run motor 3 over a given time interval.'''
     motorRun(time, 3)
 
 
 def motor4On(time):
+    '''Run motor 4 over a given time interval.'''
     motorRun(time, 4)
 
 
-def motor1Off(time):
+def motor1Off():
+    '''Stop motor 1 by setting its hexadecimal value to 0x00.'''
     bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
 
 
-def motor2Off(time):
+def motor2Off():
+    '''Stop motor 2 by setting its hexadecimal value to 0x00.'''
     bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
 
 
-def motor3Off(time):
+def motor3Off():
+    '''Stop motor 3 by setting its hexadecimal value to 0x00.'''
     bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
 
 
-def motor4Off(time):
+def motor4Off():
+    '''Stop motor 4 by setting its hexadecimal value to 0x00.'''
     bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
 
 
 def inflateAll(time):
+    '''Run motors 1 and 3 over a given time interval to inflate both pillows.'''
     motorRun2(time, 1, 3)
 
 
 def deflateAll(time):
+    '''Run motors 2 and 4 over a given time interval to deflate both pillows.'''
     motorRun2(time, 2, 4)
 
 
