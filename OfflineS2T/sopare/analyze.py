@@ -176,7 +176,7 @@ class analyze():
         #This is the command
         time.sleep(2)
         print("yeet\n")
-        os.system('python /home/pi/Desktop/PillowTalk/Speech2Text.py')
+        os.system('python /home/pi/Desktop/PillowTalk/pillowtalk/Speech2Text.py')
         return match_results
         
     def validate_match_result(self, result, start, end, match_results):

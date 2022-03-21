@@ -1,15 +1,16 @@
 from flask import Flask, make_response, render_template, request
-from waitress import serve
-
-from threading import Thread
-
-from MotorControl import *
-
-from time import sleep
-
 import json
+from MotorControl import *
+from TextParser import TextParser
+from threading import Thread
+from time import sleep
+from waitress import serve
+import traceback
+
 
 app = Flask(__name__)
+
+tp = TextParser()
 
 
 @app.route("/")
@@ -57,17 +58,32 @@ def motorcontrol():
         ]
     }
     '''
-    mc = MotorControl()
+
     body = {}
     if request.method == "POST":
         body = request.get_json()
+        seen = set()
+        try:
+            for command in body["motors"]:
+                currMotor: int = command["motor"]
+                currTime: int = command["time"]
+                # Check if motor n is even and make sure n - 1 has not been used yet
+                # Also do the same for odd numbers and n + 1
+                if (not ((currMotor % 2 == 0 and currMotor - 1 in seen) or (currMotor % 2 == 1 and currMotor + 1 in seen))) and currMotor not in seen:
+                    try:
+                        print(f"Running motor {currMotor} for {currTime}")
+                        seen.add(currMotor)
+                        runMotor(currMotor, currTime)
+                    except:
+                        print(f"Skipping motor {currMotor}")
 
-        # TODO: Connect this to the motor controller
+        except Exception as e:
+            return e, 400
 
-        return body
+        return "Success", 200
 
 
-@app.route("/parse")
+@app.route("/parse", methods=["POST"])
 def textparsing():
     '''
     Accepts a POST request and sends data to the text parser
@@ -81,9 +97,14 @@ def textparsing():
 
     body = {}
     if request.method == "POST":
-        body = request.get_json()
-        # TODO: Connect this to text parser
-        return body
+        try:
+            body = request.get_json()
+            print(body["text"])
+            tp.runCommands(body["text"])
+        except Exception as e:
+            print(e)
+
+    return "Success", 200
 
 
 @app.route("/healthcheck")
@@ -106,7 +127,7 @@ def threadtest():
         def run(self):
             print("Starting")
             sleep(5)
-            print("Done")
+            print(f"Done)")
 
     temp = TestThread()
     temp.start()
