@@ -4,23 +4,25 @@
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="/static/index.css">
+	<link rel="stylesheet" type="text/css" href="../static/index.css">
 	<script src="/static/index.js"></script>
 </head>
 
-<body>
-	<div class="title">
-		Pillow Talk Controls
+<body style="background-color: rgb(245, 227, 255);">
+	<div class="title" style ="font-size: 40px; text-align: center;">
+		<em>Pillow Talk Controls</em>
 	</div>
 	<div class="pillow-container">
 		<div class="button-container">
-			<div class="cushion-nickname">{{context['cushion_1_nickname']}}</div>
-			<button id="inflate_1" onclick="send_command('inflate cushion_1 1')">Inflate</button>
-			<button id="deflate_1" onclick="send_command('deflate cushion_1 1')">Deflate</button>
+			<div class="cushion-nickname" style = "font-size: 30px;"><strong>Cushion 1</strong></div>
+			<button id="inflate_1" style="background-color:rgb(125, 93, 126); height: 100px; width: 400px; font-size: 50px;" onclick="send_command('inflate cushion_1 1')">Inflate</button>
+			<button id="deflate_1" style="background-color:rgb(132, 177, 112); height: 100px; width: 400px; font-size: 50px;" onclick="send_command('deflate cushion_1 1')">Deflate</button>
 		</div>
 		<div class="button-container">
-			<div class="cushion-nickname">{{context['cushion_2_nickname']}}</div>
-			<button id="inflate_2" onclick="send_command('inflate cushion_2 1')">Inflate</button>
-			<button id="deflate_2" onclick="send_command('deflate cushion_2 1')">Deflate</button>
+			<div class="cushion-nickname" style = "font-size: 30px;"><strong>Cushion 2</strong></div>
+			<button id="inflate_2" style="background-color:rgb(125, 93, 126); height: 100px; width: 400px; font-size: 50px; border:10px;" onclick="send_command('inflate cushion_2 1')">Inflate</button>
+			<button id="deflate_2" style="background-color:rgb(132, 177, 112); height: 100px; width: 400px; font-size: 50px;" onclick="send_command('deflate cushion_2 1')">Deflate</button>	
+		
 		</div>
 	</div>
 
