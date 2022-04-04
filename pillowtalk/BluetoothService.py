@@ -1,17 +1,14 @@
 import bluetooth
 import os
+import json
+import requests
 
-import MotorControl
-import TextParser
-import _thread
 
 power_on = True
 
 # TODO: Update for new MotorControl functions
 def run_server():
-    text_parser = TextParser.TextParser()
-    motor_control = MotorControl.MotorControl()
-
+    url = 'localhost:3000/motorcontrol'
     server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     server_sock.bind(("", bluetooth.PORT_ANY))
     server_sock.listen(1)
@@ -38,19 +35,10 @@ def run_server():
             if not data:
                 break
             data = data.decode('utf-8')
+            params = json.loads(data)
 
-            if data == 'STOP_ALL':
-                motor_control.stopAll()
-            else:
-                # parse the data into a command
-                command = text_parser.commandSearch(data)
-
-                # if it was a valid command, convert it to a relay command
-                if command != -1 and command != -2:
-                    relay_command = text_parser.returnRelay(command)
-                    print(relay_command)
-                    if relay_command != -1 and relay_command != -2 and relay_command != -3:
-                        _thread.start_new_thread(motor_control.relayRun, (relay_command[1], relay_command[0],))
+            r = requests.post(url, params)
+            print(r);
 
             # send the command back up to the app so that it can verify it sent
             client_sock.send(data)  # currently echos the data sent
