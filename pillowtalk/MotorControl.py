@@ -14,6 +14,9 @@ ID 3 and 4 are for pillow 2 control, ID 3 for inflating and ID 4 for Deflating
 DEVICE_BUS = 1
 DEVICE_ADDR = 0x10
 
+OFF = 0x00
+ON = 0xFF
+
 bus = smbus.SMBus(DEVICE_BUS)
 
 # Concurrency stuff
@@ -35,20 +38,31 @@ class MotorThread(Thread):
         self.running = True
 
     def run(self):
-        self.offMotor = self.motor + 1 if self.motor % 2 == 0 else self.motor - 1
-        print(f"Started thread for motor {self.motor}, turning off motor {self.offMotor}")
+        '''
+        Main function for a motor thread. Enables a motor and disables its complement, then loops repeatedly until time has elapsed.
+        '''
 
-        bus.write_byte_data(DEVICE_ADDR, self.motor, 0xFF)
-        bus.write_byte_data(DEVICE_ADDR, self.offMotor, 0x00)
+        # Determine which motor to turn off, e.g. turn off motor 1 if 2 is turned on
+        self.offMotor = self.motor - 1 if self.motor % 2 == 0 else self.motor + 1
+        print(
+            f"Started thread for motor {self.motor}, turning off motor {self.offMotor}")
 
+        # Send commands to bus to enable/disable motors
+        bus.write_byte_data(DEVICE_ADDR, self.motor, ON)
+        bus.write_byte_data(DEVICE_ADDR, self.offMotor, OFF)
+
+        # Loop until timeout has ended and while the thread is still supposed to be running
         while (self.timeout > 0 and self.running):
+            # Check if the motor this thread is controlling has been turned off by something
             if bus.read_byte_data(DEVICE_ADDR, self.motor) == 0:
                 print(f"Motor {self.motor} stopped early for some reason")
                 break
+
             sleep(0.25)
             self.timeout -= 1
 
-        bus.write_byte_data(DEVICE_ADDR, self.motor, 0x00)
+        # Turn this thread's motor off
+        bus.write_byte_data(DEVICE_ADDR, self.motor, OFF)
 
     def stop(self):
         '''
@@ -60,10 +74,10 @@ class MotorThread(Thread):
 
 def stopAll():
     '''Stop all motors by setting each hexadecimal value to 0x00.'''
-    bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-    bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
-    bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-    bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+    bus.write_byte_data(DEVICE_ADDR, 1, OFF)
+    bus.write_byte_data(DEVICE_ADDR, 2, OFF)
+    bus.write_byte_data(DEVICE_ADDR, 3, OFF)
+    bus.write_byte_data(DEVICE_ADDR, 4, OFF)
 
 
 def motor1On(time):
@@ -88,22 +102,22 @@ def motor4On(time):
 
 def motor1Off():
     '''Stop motor 1 by setting its hexadecimal value to 0x00.'''
-    bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
+    bus.write_byte_data(DEVICE_ADDR, 1, OFF)
 
 
 def motor2Off():
     '''Stop motor 2 by setting its hexadecimal value to 0x00.'''
-    bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+    bus.write_byte_data(DEVICE_ADDR, 2, OFF)
 
 
 def motor3Off():
     '''Stop motor 3 by setting its hexadecimal value to 0x00.'''
-    bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
+    bus.write_byte_data(DEVICE_ADDR, 3, OFF)
 
 
 def motor4Off():
     '''Stop motor 4 by setting its hexadecimal value to 0x00.'''
-    bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+    bus.write_byte_data(DEVICE_ADDR, 4, OFF)
 
 
 def inflateAll(time):
@@ -151,19 +165,24 @@ def runMotor(motor: int, time: int) -> None:
     Spawn a new thread to run a motor for a specified amount of time
     '''
 
+    # Make sure the motor is within the possible range
     checkDomain(motor)
 
     print(f"Creating thread for motor {motor}")
 
+    # Lock the mutex to prevent threads from being created simultaneously
     runMotorLock.acquire()
 
+    # Check if a thread exists already for a motor, if so tell it to stop and wait for it to stop
     if motor in motorThreads:
         motorThreads[motor].stop()
         motorThreads[motor].join()
 
+    # Create a new thread and start it
     motorThreads[motor] = MotorThread(motor, time)
     motorThreads[motor].start()
 
+    # Release the mutex so more threads can be created
     runMotorLock.release()
 
 
@@ -179,17 +198,17 @@ def motorRun(time, motor):
 
     # Assuming pillow 1 is left and Pillow 2 is right
     if motor == 1:
-        bus.write_byte_data(DEVICE_ADDR, 1, 0xFF)
-        bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+        bus.write_byte_data(DEVICE_ADDR, 1, ON)
+        bus.write_byte_data(DEVICE_ADDR, 2, OFF)
     if motor == 2:
-        bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-        bus.write_byte_data(DEVICE_ADDR, 2, 0xFF)
+        bus.write_byte_data(DEVICE_ADDR, 1, OFF)
+        bus.write_byte_data(DEVICE_ADDR, 2, ON)
     if motor == 3:
-        bus.write_byte_data(DEVICE_ADDR, 3, 0xFF)
-        bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+        bus.write_byte_data(DEVICE_ADDR, 3, ON)
+        bus.write_byte_data(DEVICE_ADDR, 4, OFF)
     if motor == 4:
-        bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-        bus.write_byte_data(DEVICE_ADDR, 4, 0xFF)
+        bus.write_byte_data(DEVICE_ADDR, 3, OFF)
+        bus.write_byte_data(DEVICE_ADDR, 4, ON)
 
     try:
         wait(time, motor)
@@ -197,11 +216,11 @@ def motorRun(time, motor):
         return
 
     if motor == 1 or motor == 2:
-        bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-        bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+        bus.write_byte_data(DEVICE_ADDR, 1, OFF)
+        bus.write_byte_data(DEVICE_ADDR, 2, OFF)
     if motor == 3 or motor == 4:
-        bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-        bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+        bus.write_byte_data(DEVICE_ADDR, 3, OFF)
+        bus.write_byte_data(DEVICE_ADDR, 4, OFF)
 
     print("motor Finished")
 
@@ -215,17 +234,17 @@ def motorRun2(time, motor, motor2):
 
     # Assuming pillow 1 is left and Pillow 2 is right
     if motor == 1 or motor2 == 1:
-        bus.write_byte_data(DEVICE_ADDR, 1, 0xFF)
-        bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
+        bus.write_byte_data(DEVICE_ADDR, 1, ON)
+        bus.write_byte_data(DEVICE_ADDR, 2, OFF)
     if motor == 2 or motor2 == 2:
-        bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
-        bus.write_byte_data(DEVICE_ADDR, 2, 0xFF)
+        bus.write_byte_data(DEVICE_ADDR, 1, OFF)
+        bus.write_byte_data(DEVICE_ADDR, 2, ON)
     if motor == 3 or motor2 == 3:
-        bus.write_byte_data(DEVICE_ADDR, 3, 0xFF)
-        bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+        bus.write_byte_data(DEVICE_ADDR, 3, ON)
+        bus.write_byte_data(DEVICE_ADDR, 4, OFF)
     if motor == 4 or motor2 == 4:
-        bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
-        bus.write_byte_data(DEVICE_ADDR, 4, 0xFF)
+        bus.write_byte_data(DEVICE_ADDR, 3, OFF)
+        bus.write_byte_data(DEVICE_ADDR, 4, ON)
 
     try:
         wait(time, motor, motor2)
