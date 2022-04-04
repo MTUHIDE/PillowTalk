@@ -8,7 +8,7 @@ power_on = True
 
 # TODO: Update for new MotorControl functions
 def run_server():
-    url = 'localhost:3000/motorcontrol'
+    url = 'http://localhost:3000/motorcontrol'
     server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     server_sock.bind(("", bluetooth.PORT_ANY))
     server_sock.listen(1)
@@ -29,22 +29,25 @@ def run_server():
     client_sock, client_info = server_sock.accept()
     print("Accepted connection from", client_info)
 
-    try:
+    if True: 
         while True:
             data = client_sock.recv(1024)
             if not data:
                 break
+            
             data = data.decode('utf-8')
+            
             params = json.loads(data)
-
-            r = requests.post(url, params)
-            print(r);
+            print(params)
+            
+            r = requests.post(url = url, json = params)
+            print(r)
 
             # send the command back up to the app so that it can verify it sent
             client_sock.send(data)  # currently echos the data sent
+            
 
-    except OSError:
-        pass
+    
 
     print("Disconnected.")
 
