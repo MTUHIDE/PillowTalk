@@ -1,42 +1,32 @@
-
+#import threading
 import speech_recognition as sr
 from datetime import date
 from time import sleep
 from TextParser import *
-from RelayControl import *
-from MotorControl import *
-motor = MotorControl()
+import requests
 
-r = sr.Recognizer()
-mic = sr.Microphone()
-text = TextParser()
-wakeWord = "pillow"
+class Speech2Text:
 
-print("hello")
 
-while True:
-    with mic as source:
-        audio = r.listen(source)
+    print("hello")
+    def listen(self):
+        r = sr.Recognizer()
+        mic = sr.Microphone()
+        text = TextParser()
+        wakeWord = "pillow"
         
-    try:
-        words = r.recognize_google(audio)
-        print(words)
+        with mic as source:
+            audio = r.listen(source, phrase_time_limit=10)
+                
+        try:
+            words = r.recognize_google(audio)
+            print (words)
+            requests.post("http://localhost:3000/parse",json={"text": words})
 
-        command = text.commandSearch(words, wakeWord)
-        print(command)
-        if command == -2:
-            print("Command incomplete")
+        except Exception as e:
+            print(e)
+    def __init__(self):
+        self.listen()
 
-        relay = text.returnRelay(command)
-        print(relay)
-        if relay ==-1:
-            print("Invalid Number")
-        elif relay == -2:
-            print("Invalid Action")
-        elif relay == -3:
-            print("Invalid Inflatable")
-        else:
-            motor.relayRun(relay[1], relay[0])
-
-    except:
-        print("Failed to understand")
+Speech2Text()
+    
