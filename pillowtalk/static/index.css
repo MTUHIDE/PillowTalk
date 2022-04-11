@@ -92,6 +92,13 @@ div{
 	font-size: 50px;
 }
 
+.quantity{
+	border-radius: 25px;
+	text-align: center;
+	font-size: 40px;
+	width: 85px;
+	height: 60px;
+}
 /* #inflate_1{
 	border-radius: 25px;  
 	background-color: rgb(125, 93, 126); 
