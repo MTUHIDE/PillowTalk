@@ -72,15 +72,11 @@ body{
 	font-size: 30px;
 }
 
-#up{
-
-}
-
 div{ 
 	text-align: center;
 }
 
-#inflate_1{
+.inflate-button {
 	border-radius: 25px;  
 	background-color: rgb(125, 93, 126); 
 	height: 100px; 
@@ -88,26 +84,42 @@ div{
 	font-size: 50px;
 }
 
-#deflate_1{
+.deflate-button {
 	border-radius: 25px;  
 	background-color : rgb(132, 177, 112); 
 	height: 100px; 
 	width: 400px; 
 	font-size: 50px;
 }
+
+/* #inflate_1{
+	border-radius: 25px;  
+	background-color: rgb(125, 93, 126); 
+	height: 100px; 
+	width: 400px; 
+	font-size: 50px;
+} */
+
+/* #deflate_1{
+	border-radius: 25px;  
+	background-color : rgb(132, 177, 112); 
+	height: 100px; 
+	width: 400px; 
+	font-size: 50px;
+} */
    
-#inflate_2{
+/* #inflate_2{
 	border-radius: 25px;  
 	background-color:rgb(125, 93, 126); 
 	height: 100px; 
 	width: 400px; 
 	font-size: 50px;
-}
+} */
 
-#deflate_2{
+/* #deflate_2{
 	border-radius: 25px;
 	background-color:rgb(132, 177, 112); 
 	height: 100px; 
 	width: 400px; 
-	font-size: 50px;
+	font-size: 50px; */
 }
