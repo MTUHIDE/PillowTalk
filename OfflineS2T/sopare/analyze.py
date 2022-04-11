@@ -173,8 +173,12 @@ class analyze():
             if (self.debug):
                 self.debug_info += 'Results contain too many empty tokens. ' + str(framing.count('')) + ' / ' + str(len(framing)) + ' Eliminating results'
             return [ ] * len(match_results)
+        #This is the command
+        time.sleep(2)
+        print("yeet\n")
+        os.system('python /home/pi/Desktop/PillowTalk/pillowtalk/Speech2Text.py')
         return match_results
-
+        
     def validate_match_result(self, result, start, end, match_results):
         if (len(result) == 0 or result[0] == ''):
             return match_results
