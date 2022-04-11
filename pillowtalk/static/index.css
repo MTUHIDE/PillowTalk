@@ -72,10 +72,6 @@ body{
 	font-size: 30px;
 }
 
-#up{
-
-}
-
 div{ 
 	text-align: center;
 }
@@ -94,6 +90,14 @@ div{
 	height: 100px; 
 	width: 400px; 
 	font-size: 50px;
+}
+
+.quantity{
+	border-radius: 25px;
+	text-align: center;
+	font-size: 40px;
+	width: 85px;
+	height: 60px;
 }
    
 #inflate_2{
