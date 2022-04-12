@@ -4,56 +4,32 @@
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="/static/index.css">
+	<link rel="stylesheet" type="text/css" href="../static/index.css">
 	<script src="/static/index.js"></script>
 </head>
 
 <body>
 	<div class="title">
-		Button Controls
+		<em><blink>Pillow Talk Controls</blink></em>
 	</div>
 	<div class="pillow-container">
 		<div class="button-container">
-			<div class="cushion-nickname">{{context['cushion_1_nickname']}}</div>
-			<button id="inflate_1" onclick="send_command('inflate cushion_1 1')">Inflate</button>
-			<button id="deflate_1" onclick="send_command('deflate cushion_1 1')">Deflate</button>
+			<input type="text" id="cushion-1-nickname" class="resizedTextbox" value="{{context["cushion_1_nickname"]}}"
+				onkeypress="saveCushionNames(event)">
+			<button id="inflate_1" class="inflate-button" onclick="inflate(1, 1)">Inflate</button>
+			<button id="deflate_1" class="deflate-button" onclick="deflate(2, 1)">Deflate</button>
+			<input class="quantity" id="cushion-1-time" min="0" name="form-0-quantity" value="1" type="number">
 		</div>
 		<div class="button-container">
-			<div class="cushion-nickname">{{context['cushion_2_nickname']}}</div>
-			<button id="inflate_2" onclick="send_command('inflate cushion_2 1')">Inflate</button>
-			<button id="deflate_2" onclick="send_command('deflate cushion_2 1')">Deflate</button>
+			<input type="text" id="cushion-2-nickname" class="resizedTextbox" value="{{context["cushion_2_nickname"]}}"
+				onkeypress="saveCushionNames(event)">
+			<button id="inflate_2" class="inflate-button" onclick="inflate(3, 2)">Inflate</button>
+			<button id="deflate_2" class="deflate-button" onclick="deflate(4, 2)">Deflate</button>
+			<input class="quantity" id="cushion-2-time" min="0" name="id_form-0-quantity" value="1" type="number">
 		</div>
 	</div>
-
-	<div class="settings-container">
-		<div class="title">Settings</div>
-
-		<form method="post" name="settings_form" id="settings_form" action="/settings">
-			<div>Cushion 1 Nickname:</div>
-			<input type="text" name="cushion_1_nickname" placeholder="Cushion 1 Nickname"
-				value="{{context['cushion_1_nickname']}}" />
-
-			<div>Cushion 2 Nickname:</div>
-			<input type="text" name="cushion_2_nickname" placeholder="Cushion 2 Nickname"
-				value="{{context['cushion_2_nickname']}}" />
-
-			<div>Cushion 1 Inflate Time (seconds):</div>
-			<input type="text" name="cushion_1_time" placeholder="Cushion 1 Time" value="{{context['cushion_1_time']}}" />
-
-			<div>Cushion 2 Inflate Time (seconds):</div>
-			<input type="text" name="cushion_2_time" placeholder="Cushion 2 Time" value="{{context['cushion_2_time']}}" />
-			
-			<div class="settings-form-controls">
-				<input type="submit" name="save_settings" value="Save"/>
-				<input type="button" name="reset_settings" onclick="reset_settings" value="Reset" />
-			</div>
-		</form>
-
-		<form method="post" name="command_form" id="command_form" action="/command">
-			<br>
-			<div class="title">Manual command control</div>
-			<input type="text" id="command" name="command" placeholder="Enter command" />
-			<input type="submit" id="submit_btn" value="submit" name="ok" />
-		</form>
+	<div>
+		<button id="stop-button" onclick="stopAll()">Stop All</button>
 	</div>
 </body>
 

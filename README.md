@@ -9,6 +9,7 @@
 - Josh Overbeek
 - Thawng Hmung
 - Mark Washington
+- Natalia Suwaj
 
 ## Advisor: Keith Vertanen
 
