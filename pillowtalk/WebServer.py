@@ -31,13 +31,29 @@ def settings():
     Send stuff here to update settings
     '''
 
+    body = {}
+
     if request.method == 'POST':
-        with open("settings.json", "w") as f:
-            context = {}
-            context["cushion_1_nickname"] = request.form["cushion_1_nickname"]
-            context["cushion_2_nickname"] = request.form["cushion_2_nickname"]
-            context["cushion_1_time"] = request.form["cushion_1_time"]
-            context["cushion_2_time"] = request.form["cushion_2_time"]
+        body = request.get_json()
+
+        with open("settings.json", "r+") as f:
+
+            context = json.load(f)
+
+            f.seek(0)
+            f.truncate()
+
+            if "cushion_1_nickname" in body:
+                context["cushion_1_nickname"] = body["cushion_1_nickname"]
+
+            if "cushion_2_nickname" in body:
+                context["cushion_2_nickname"] = body["cushion_2_nickname"]
+
+            if "cushion_1_time" in body:
+                context["cushion_1_time"] = body["cushion_1_time"]
+
+            if "cushion_2_time" in body:
+                context["cushion_2_time"] = body["cushion_2_time"]
 
             json.dump(context, f)
 
@@ -88,6 +104,7 @@ def motorcontrol():
             return e, 400
 
         return "Success", 200
+
 
 @app.route("/parse", methods=["POST"])
 def textparsing():

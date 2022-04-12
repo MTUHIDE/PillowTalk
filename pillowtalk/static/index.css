@@ -99,6 +99,15 @@ div{
 	width: 85px;
 	height: 60px;
 }
+
+#stop-button {
+	border-radius: 25px;  
+	background-color : indianred; 
+	height: 100px; 
+	width: 400px; 
+	font-size: 50px;
+}
+
 /* #inflate_1{
 	border-radius: 25px;  
 	background-color: rgb(125, 93, 126); 

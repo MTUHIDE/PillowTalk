@@ -10,22 +10,26 @@
 
 <body>
 	<div class="title">
-		<em>Pillow Talk Controls</em>
+		<em><blink>Pillow Talk Controls</blink></em>
 	</div>
-	<div class = "pillow-container">
+	<div class="pillow-container">
 		<div class="button-container">
-			<form><input type="text" class="resizedTextbox"></form>
-			<button id="inflate_1" class = "inflate-button" onclick ="send_command('inflate cushion_1 1')">Inflate</button>
-			<button id="deflate_1" class = "deflate-button" onclick="send_command('deflate cushion_1 1')">Deflate</button>
-			<input class="quantity" id="id_form-0-quantity" min="0" name="form-0-quantity" value="1" type="number">
+			<input type="text" id="cushion-1-nickname" class="resizedTextbox" value="{{context["cushion_1_nickname"]}}"
+				onkeypress="saveCushionNames(event)">
+			<button id="inflate_1" class="inflate-button" onclick="inflate(1, 1)">Inflate</button>
+			<button id="deflate_1" class="deflate-button" onclick="deflate(2, 1)">Deflate</button>
+			<input class="quantity" id="cushion-1-time" min="0" name="form-0-quantity" value="1" type="number">
 		</div>
 		<div class="button-container">
-			<form><input type="text" class="resizedTextbox"></form>
-			<button id="inflate_2" class = "inflate-button" onclick="send_command('inflate cushion_2 1')">Inflate</button>
-			<button id="deflate_2" class = "deflate-button" onclick="send_command('deflate cushion_2 1')">Deflate</button>
-			<input class = "quantity" id = "id_form-0-quantity" min="0" name="id_form-0-quantity" value="1" type="number">
+			<input type="text" id="cushion-2-nickname" class="resizedTextbox" value="{{context["cushion_2_nickname"]}}"
+				onkeypress="saveCushionNames(event)">
+			<button id="inflate_2" class="inflate-button" onclick="inflate(3, 2)">Inflate</button>
+			<button id="deflate_2" class="deflate-button" onclick="deflate(4, 2)">Deflate</button>
+			<input class="quantity" id="cushion-2-time" min="0" name="id_form-0-quantity" value="1" type="number">
 		</div>
 	</div>
+	<div>
+		<button id="stop-button" onclick="stopAll()">Stop All</button>
 	</div>
 </body>
 
