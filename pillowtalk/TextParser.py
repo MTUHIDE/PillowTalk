@@ -10,7 +10,7 @@ class TextParser:
         self._dictionary = self.openDictionary()
         if self._dictionary == -1:
             self._dictionary = None
-            print("Dictionary was not pulled")
+            print("Dictionary was not pulled for Text Parser")
 
     def getDictValues(self, key):
         '''Obtain the values in the dictionary associated with a given key.'''
