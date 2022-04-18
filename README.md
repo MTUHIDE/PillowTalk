@@ -107,6 +107,7 @@ Install Waitress with the following command: `sudo pip install waitress`
 
 respeaker: https://github.com/respeaker/seeed-voicecard/issues/192
 
+### How to Run:
 The port used for local HTTPS is **4433**.
 The external port that must be used for HTTPS is **443**.
 
