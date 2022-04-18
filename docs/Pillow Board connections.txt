@@ -1,0 +1,23 @@
+﻿1.	(Power Supply)
+	AC/DC Adapter (supplies 12 V at 8 A) 
+	Switch for turning board on/off 
+	Ground runs to 5 way splitter (2)
+        Positive supply routes to a 5 way splitter (3)
+
+
+2.      (Ground splitter)
+        To all motors and valves
+        To Step Down Converter (4)
+        
+3.   	(+12V splitter)
+	Runs to smbus hat (Pi)
+	To Step Down Converter (4)
+
+
+4.    	(DC-DC Step Down Converter)
+        Inputs 12V DC Supply and outputs USB C supply for Raspberry Pi
+
+
+5.  	(Valve and Motors)
+        Motors 1 and 3 (inflate) are connected via tube (intake on inflate and outlet on deflate)
+        Unused intake and outlet are connected for each pillow series
