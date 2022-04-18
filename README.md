@@ -71,7 +71,7 @@ pybluez: `sudo apt-get install libbluetooth-dev`
 	ExecStart=/bin/chgrp bluetooth /var/run/sdp
 	ExecStartPost=/bin/chmod 662 /var/run/sdp
 	```		
-5. Run the following lines
+5. Run the following commands
 	```
 	sudo systemctl daemon-reload
 	sudo systemctl enable var-run-sdp.path
