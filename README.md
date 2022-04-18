@@ -109,7 +109,14 @@ Install Waitress with the following command: `sudo pip install waitress`
 respeaker: https://github.com/respeaker/seeed-voicecard/issues/192
 
 ### How to Run:
-The port used for local HTTPS is **4433**.
-The external port that must be used for HTTPS is **443**.
+If start script does not work, `cd PillowTalk` then run `python3 pillowtalk/WebServer.py &`. Any other script can now be run.
 
-To run the server, make sure that you are inside of the PillowTalk folder and run `python2.7 web_server.py`. This will open the Raspberry Pi's local IP as a flask server address.
+To initialize bluetooth service run `python3 pillowtalk/BluetoothService.py &`.
+
+To run speech to text, `cd newoffline/sopare` then run `python2.7 sopare.py -l &`
+
+This will open the Raspberry Pi's local IP as a flask server address.
+
+The port used is **3000**.
+
+Connect to web application by using address `localhost:3000`
