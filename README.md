@@ -23,7 +23,7 @@ Not Included Downloads:
 If you do not know how to setup a Raspberry Pi please follow this tutorial:
 	https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
 
-Make sure that the pi is updated and upgraded by using (This will take some time):
+Make sure that the pi is updated and upgraded with the following commands, which *will take some time*:
 ```
 sudo apt update
 sudo apt full-upgrade
@@ -89,8 +89,7 @@ https://github.com/pybluez/pybluez/issues/390
 	
 run scripts on startup:
 
-open .bash_login with `sudo nano ~/.bash_login` and enter the follow text:
-
+open .bash_login with `sudo nano ~/.bash_login` and enter the following text:
 ```
 bt_start() {
 	sleep 10
@@ -115,4 +114,4 @@ The port used for local HTTPS is 4433
 
 The external port that must be used for HTTPS is 443.
 
-To run the server, make sure that you are inside of the PillowTalk folder and run "python2.7 web_server.py". This will open the raspberry pi's local ip as a flask server address.
+To run the server, make sure that you are inside of the PillowTalk folder and run "python2.7 web_server.py". This will open the Raspberry Pi's local IP as a flask server address.
