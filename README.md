@@ -1,5 +1,6 @@
 # PillowTalk
-## Worked On By:
+## Members
+- **Dr. Keith Vertanen (Advisor)**
 - Isaac Long
 - Ian Lawrie
 - Javen Zamojcin
@@ -12,7 +13,6 @@
 - Natalia Suwaj
 - Liam Cacioppo
 - Annika Price
-- Keith Vertanen
 
 ## Setting Up the Raspberry Pi
 Not Included Downloads:
