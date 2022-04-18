@@ -106,7 +106,7 @@ python2.7 sopare.py -l &
 Then run `sudo reboot`
 	
 
-waitress: sudo pip install waitress
+waitress: `sudo pip install waitress`
 
 respeaker: https://github.com/respeaker/seeed-voicecard/issues/192
 
