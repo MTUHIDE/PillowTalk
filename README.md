@@ -23,7 +23,7 @@ Not Included Downloads:
 If you do not know how to setup a Raspberry Pi please follow this tutorial:
 	https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
 
-Make sure that the pi is updated and upgraded with the following commands, which *will take some time*:
+Make sure that the Pi is updated and upgraded with the following commands, which *will take some time*:
 ```
 sudo apt update
 sudo apt full-upgrade
@@ -44,9 +44,9 @@ pybluez: `sudo apt-get install libbluetooth-dev`
 	also found here: https://github.com/pybluez/pybluez in README libraries
 
 ### Bluetooth Permissions:
-1. Edit the line `ExecStart=/usr/lib/bluetooth/bluetoothd` under [Service] to `ExecStart=/usr/lib/bluetooth/bluetoothd -C` in /lib/systemd/system/bluetooth.service
-2. Copy /lib/systemd/system/bluetooth.service to /etc/systemd/system/bluetooth.service
-3. Create the file "/etc/systemd/system/var-run-sdp.path" with
+1. Edit the line `ExecStart=/usr/lib/bluetooth/bluetoothd` under [Service] to `ExecStart=/usr/lib/bluetooth/bluetoothd -C` in **/lib/systemd/system/bluetooth.service**
+2. Copy **/lib/systemd/system/bluetooth.service** to **/etc/systemd/system/bluetooth.service**
+3. Create the file **/etc/systemd/system/var-run-sdp.path** with
 	```
 	[Unit]
 	Descrption=Monitor /var/run/sdp
@@ -58,7 +58,7 @@ pybluez: `sudo apt-get install libbluetooth-dev`
 	PathExists=/var/run/sdp
 	Unit=var-run-sdp.service
 	```
-4. Create the file "/etc/systemd/system/var-run-sdp.service" with
+4. Create the file **/etc/systemd/system/var-run-sdp.service** with
 	```
 	[Unit]
 	Description=Set permission of /var/run/sdp
@@ -78,7 +78,7 @@ pybluez: `sudo apt-get install libbluetooth-dev`
 	sudo systemctl enable var-run-sdp.service
 	sudo systemctl start var-run-sdp.path
 	```	
-6. Make sure your pi user is in the bluetooth group:
+6. Make sure your Pi user is in the Bluetooth group:
 	`sudo usermod -G bluetooth -a pi`	
 7. Reboot the Raspberry Pi.
 
@@ -87,7 +87,7 @@ https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-
 https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
 https://github.com/pybluez/pybluez/issues/390
 	
-run scripts on startup:
+### Run Scripts on Startup:
 
 open .bash_login with `sudo nano ~/.bash_login` and enter the following text:
 ```
