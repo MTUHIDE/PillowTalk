@@ -1,5 +1,5 @@
 # PillowTalk
-## Worked on By:
+## Worked On By:
 - Isaac Long
 - Ian Lawrie
 - Javen Zamojcin
@@ -14,7 +14,6 @@
 - Annika Price
 
 ## Advisor: Keith Vertanen
-
 Not Included Downloads:
 - STT Engine
 
@@ -88,7 +87,6 @@ pybluez: `sudo apt-get install libbluetooth-dev`
 - https://github.com/pybluez/pybluez/issues/390
 	
 ### Run Scripts on Startup:
-
 open .bash_login with `sudo nano ~/.bash_login` and enter the following text:
 ```
 bt_start() {
