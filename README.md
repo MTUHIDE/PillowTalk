@@ -1,5 +1,5 @@
 # PillowTalk
-## Worked on by:
+## Worked on By:
 - Isaac Long
 - Ian Lawrie
 - Javen Zamojcin
@@ -18,11 +18,10 @@
 Not Included Downloads:
 - STT Engine
 
-The software requires the hardware of a raspberry pi 3 or 4.
+**The software requires the hardware of a Raspberry Pi 3 or 4.**
 
-If you do not know how to setup a raspberry pi please follow this tutorial:
-
-https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
+If you do not know how to setup a Raspberry Pi please follow this tutorial:
+	https://projects.raspberrypi.org/en/projects/raspberry-pi-setting-up
 
 Make sure that the pi is updated and upgraded by using (This will take some time):
 ```
@@ -35,7 +34,6 @@ sudo apt full-upgrade
 2. Within the project folder run `poetry install`
 
 ## Old Installation Steps:
-
 Flask: `sudo pip install -U Flask`
 	also found here: https://pypi.org/project/Flask/
 	
@@ -82,9 +80,9 @@ pybluez: `sudo apt-get install libbluetooth-dev`
 	```	
 6. Make sure your pi user is in the bluetooth group:
 	`sudo usermod -G bluetooth -a pi`	
-7. Reboot pi
+7. Reboot the Raspberry Pi.
 
-#### More reading:
+#### More Reading:
 https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
 https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
 https://github.com/pybluez/pybluez/issues/390
