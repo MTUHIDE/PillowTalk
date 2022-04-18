@@ -91,22 +91,22 @@ bluetooth permissions:
 	
 run scripts on startup:
 
-	open .bash_login with `sudo nano ~/.bash_login` and enter the follow text:
+open .bash_login with `sudo nano ~/.bash_login` and enter the follow text:
 
-	```
-	bt_start() {
-		sleep 10
-		python3 /home/pi/PillowTalk/pillowtalk/BluetoothService.py &
-		sleep 1
-		python 2.7 /home/pi/PillowTalk/newoffline/sopare/sopare.py &
-		sleep 1
-		python3 /home/pi/PillowTalk/pillowtalk/WebServer.py &
-	}
+```
+bt_start() {
+	sleep 10
+	python3 /home/pi/PillowTalk/pillowtalk/BluetoothService.py &
+	sleep 1
+	python 2.7 /home/pi/PillowTalk/newoffline/sopare/sopare.py &
+	sleep 1
+	python3 /home/pi/PillowTalk/pillowtalk/WebServer.py &
+}
 
-	bt_start &
-	```
+bt_start &
+```
 
-	Then run `sudo reboot`
+Then run `sudo reboot`
 	
 
 waitress: sudo pip install waitress
