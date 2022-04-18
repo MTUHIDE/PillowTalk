@@ -89,13 +89,24 @@ bluetooth permissions:
 	https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
 	https://github.com/pybluez/pybluez/issues/390
 	
-run bluethooth_service.py on user login:
+run scripts on startup:
 
-	without graphical terminal emulator
-	add 'python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile ' ~/.bash_login'
+	open .bash_login with `sudo nano ~/.bash_login` and enter the follow text:
 
-	with graphical terminal emulator
-	add 'lxterminal -e python3 /home/pi/PillowTalk/bluetooth_service.py &' to your bash profile ' ~/.bash_login?'
+	```
+	bt_start() {
+		sleep 10
+		python3 /home/pi/PillowTalk/pillowtalk/BluetoothService.py &
+		sleep 1
+		python 2.7 /home/pi/PillowTalk/newoffline/sopare/sopare.py &
+		sleep 1
+		python3 /home/pi/PillowTalk/pillowtalk/WebServer.py &
+	}
+
+	bt_start &
+	```
+
+	Then run `sudo reboot`
 	
 
 waitress: sudo pip install waitress
