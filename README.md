@@ -83,9 +83,9 @@ pybluez: `sudo apt-get install libbluetooth-dev`
 7. Reboot the Raspberry Pi.
 
 #### More Reading:
-https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
-https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
-https://github.com/pybluez/pybluez/issues/390
+- https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
+- https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
+- https://github.com/pybluez/pybluez/issues/390
 	
 ### Run Scripts on Startup:
 
@@ -105,8 +105,7 @@ python2.7 sopare.py -l &
 
 Then run `sudo reboot`
 	
-
-waitress: `sudo pip install waitress`
+Install Waitress with the following command: `sudo pip install waitress`
 
 respeaker: https://github.com/respeaker/seeed-voicecard/issues/192
 
