@@ -110,8 +110,7 @@ waitress: `sudo pip install waitress`
 
 respeaker: https://github.com/respeaker/seeed-voicecard/issues/192
 
-The port used for local HTTPS is 4433
+The port used for local HTTPS is **4433**.
+The external port that must be used for HTTPS is **443**.
 
-The external port that must be used for HTTPS is 443.
-
-To run the server, make sure that you are inside of the PillowTalk folder and run "python2.7 web_server.py". This will open the Raspberry Pi's local IP as a flask server address.
+To run the server, make sure that you are inside of the PillowTalk folder and run `python2.7 web_server.py`. This will open the Raspberry Pi's local IP as a flask server address.
