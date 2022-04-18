@@ -11,6 +11,7 @@
 - Mark Washington
 - Natalia Suwaj
 - Liam Cacioppo
+- Annika Price
 
 ## Advisor: Keith Vertanen
 
@@ -41,53 +42,52 @@ Flask: `sudo pip install -U Flask`
 sphinx: `sudo pip install -U sphinx`
 	also found here: https://www.sphinx-doc.org/en/master/usage/installation.html
 	
-pybluez: https://github.com/pybluez/pybluez in README
-libraries: sudo apt-get install libbluetooth-dev
+pybluez: `sudo apt-get install libbluetooth-dev`
+	also found here: https://github.com/pybluez/pybluez in README libraries
 
-bluetooth permissions:
+### Bluetooth Permissions:
+1. Edit the line `ExecStart=/usr/lib/bluetooth/bluetoothd` under [Service] to `ExecStart=/usr/lib/bluetooth/bluetoothd -C` in /lib/systemd/system/bluetooth.service
+2. Copy /lib/systemd/system/bluetooth.service to /etc/systemd/system/bluetooth.service
+3. Create the file "/etc/systemd/system/var-run-sdp.path" with
+	```
+	[Unit]
+	Descrption=Monitor /var/run/sdp
+		
+	[Install]
+	WantedBy=bluetooth.service
+		
+	[Path]
+	PathExists=/var/run/sdp
+	Unit=var-run-sdp.service
+	```
+4. Create the file "/etc/systemd/system/var-run-sdp.service" with
+	```
+	[Unit]
+	Description=Set permission of /var/run/sdp
 
-	1) Edit the line "ExecStart=/usr/lib/bluetooth/bluetoothd" under [Service] to "ExecStart=/usr/lib/bluetooth/bluetoothd -C' in /lib/systemd/system/bluetooth.service
-	
-	2) Copy /lib/systemd/system/bluetooth.service to /etc/systemd/system/bluetooth.service
-	
-	3) Create the file "/etc/systemd/system/var-run-sdp.path" with
-		[Unit]
-		Descrption=Monitor /var/run/sdp
+	[Install]
+	RequiredBy=var-run-sdp.path
 		
-		[Install]
-		WantedBy=bluetooth.service
-		
-		[Path]
-		PathExists=/var/run/sdp
-		Unit=var-run-sdp.service
-	
-	4) Create the file "/etc/systemd/system/var-run-sdp.service" with
-		[Unit]
-		Description=Set permission of /var/run/sdp
+	[Service]
+	Type=simple
+	ExecStart=/bin/chgrp bluetooth /var/run/sdp
+	ExecStartPost=/bin/chmod 662 /var/run/sdp
+	```		
+5. Run the following lines
+	```
+	sudo systemctl daemon-reload
+	sudo systemctl enable var-run-sdp.path
+	sudo systemctl enable var-run-sdp.service
+	sudo systemctl start var-run-sdp.path
+	```	
+6. Make sure your pi user is in the bluetooth group:
+	`sudo usermod -G bluetooth -a pi`	
+7. Reboot pi
 
-		[Install]
-		RequiredBy=var-run-sdp.path
-		
-		[Service]
-		Type=simple
-		ExecStart=/bin/chgrp bluetooth /var/run/sdp
-		ExecStartPost=/bin/chmod 662 /var/run/sdp
-		
-	5) run this
-		sudo systemctl daemon-reload
-		sudo systemctl enable var-run-sdp.path
-		sudo systemctl enable var-run-sdp.service
-		sudo systemctl start var-run-sdp.path
-		
-	6) Make sure your pi user is in the bluetooth group:
-		sudo usermod -G bluetooth -a pi
-		
-	7) Reboot pi
-	
-	More reading)
-	https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
-	https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
-	https://github.com/pybluez/pybluez/issues/390
+#### More reading:
+https://stackoverflow.com/questions/34599703/rfcomm-bluetooth-permission-denied-error-raspberry-pi
+https://github.com/ev3dev/ev3dev/issues/274#issuecomment-74593671
+https://github.com/pybluez/pybluez/issues/390
 	
 run scripts on startup:
 
