@@ -98,7 +98,7 @@ bt_start() {
 	sleep 10
 	python3 /home/pi/PillowTalk/pillowtalk/BluetoothService.py &
 	sleep 1
-	python 2.7 /home/pi/PillowTalk/newoffline/sopare/sopare.py &
+	python2.7 /home/pi/PillowTalk/newoffline/sopare/sopare.py &
 	sleep 1
 	python3 /home/pi/PillowTalk/pillowtalk/WebServer.py &
 }
