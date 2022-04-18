@@ -10,6 +10,7 @@
 - Thawng Hmung
 - Mark Washington
 - Natalia Suwaj
+- Liam Cacioppo
 
 ## Advisor: Keith Vertanen
 
