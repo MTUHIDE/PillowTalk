@@ -96,12 +96,12 @@ bt_start() {
 	sleep 10
 	python3 /home/pi/PillowTalk/pillowtalk/BluetoothService.py &
 	sleep 1
-	python2.7 /home/pi/PillowTalk/newoffline/sopare/sopare.py &
-	sleep 1
 	python3 /home/pi/PillowTalk/pillowtalk/WebServer.py &
 }
 
 bt_start &
+cd /home/pi/PillowTalk/newoffline/sopare
+python2.7 sopare.py -l &
 ```
 
 Then run `sudo reboot`
