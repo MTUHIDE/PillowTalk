@@ -12,8 +12,9 @@
 - Natalia Suwaj
 - Liam Cacioppo
 - Annika Price
+- Keith Vertanen
 
-## Advisor: Keith Vertanen
+## Setting Up the Raspberry Pi
 Not Included Downloads:
 - STT Engine
 
@@ -32,7 +33,7 @@ sudo apt full-upgrade
 1. Follow the steps at [this link](https://python-poetry.org/docs/#installation) to install the Poetry package manager.
 2. Within the project folder run `poetry install`
 
-## Old Installation Steps:
+## Old Installation Steps
 Flask: `sudo pip install -U Flask`
 	also found here: https://pypi.org/project/Flask/
 	
