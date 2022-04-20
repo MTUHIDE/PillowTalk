@@ -1,35 +1,11 @@
-from threading import Thread
-from time import sleep
+from driver import apa102
+from gpiozero import LED
+import time
 
-class TestThread(Thread):
-
-    def __init__(self, timeout):
-        super().__init__()
-        self.timeout = timeout
-
-    def run(self):
-        print(f"Sleeping for {self.timeout} seconds")
-        while (self.timeout > 0):
-            sleep(1)
-            self.timeout -= 1
-            print(self.timeout)
-            
-        print(f"Done")
-    
-    def updateTime(self, timeout):
-        print(f"Set timeout to {timeout} seconds")
-        self.timeout = timeout
-
-temp = TestThread(10)
-temp.start()
-
-temp = TestThread(20)
-temp.start()
-
-print(temp.is_alive())
-sleep(2)
-temp.updateTime(2)
-
-temp.join() # Wait for temp to finish
-
-print(temp.is_alive())
+strip = apa102.APA102(num_led=12, global_brightness=100, mosi=10, sclk=11, order='rbg')
+strip.clear_strip()
+for i in range(12):
+    strip.set_pixel_rgb(i, 0xFF0000)
+strip.show()
+time.sleep(5)
+strip.clear_strip()
